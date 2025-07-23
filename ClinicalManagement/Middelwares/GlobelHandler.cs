@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Diagnostics;
+﻿using ClinicalManagement.Application.Common.Result;
+using Microsoft.AspNetCore.Diagnostics;
 using System.Net;
 using System.Text.Json;
 
@@ -8,30 +9,55 @@ namespace ClinicalManagement.Middelwares
     {
         public static void ExceptionHandling(this IApplicationBuilder builder)
         {
-            builder.UseExceptionHandler(o => o.Run(
-                async context =>
+            builder.UseExceptionHandler(config =>
+            {
+                config.Run(async context =>
                 {
-                    var errorFeature = context.Features.Get<IExceptionHandlerFeature>();
-                    var exceptions = errorFeature.Error;
+                    context.Response.ContentType = "application/json";
 
-                    if (!(exceptions is FluentValidation.ValidationException validationException))
-                        throw exceptions;
+                    var exceptionFeature = context.Features.Get<IExceptionHandlerFeature>();
+                    var exception = exceptionFeature?.Error;
 
-                    var error = validationException.Errors.Select(error => new
+                    object response;
+                    int statusCode;
+
+                    if (exception is FluentValidation.ValidationException validationException)
                     {
-                        Properity = error.PropertyName,
-                        Message = error.ErrorMessage,
-                        Code = error.ErrorCode,
+                        statusCode = (int)HttpStatusCode.BadRequest;
 
+                        var errors = validationException.Errors.Select(error => new Error
+                        (
+                            //Property = error.PropertyName,
+                            message: error.ErrorMessage,
+                            //Code = error.ErrorCode,
+                            code: statusCode.ToString()
+                        ));
+
+                        response = Result<object>.Failure(errors);
+                    }
+                    else
+                    {
+                        statusCode = (int)HttpStatusCode.InternalServerError;
+
+                        response = Result<Error>.Failure(new Error
+                        (
+                            message: exception?.Message,
+                            // code=  exception?.StackTrace,
+                            code: statusCode.ToString()
+
+                        ));
+                    }
+
+                    context.Response.StatusCode = statusCode;
+
+                    var json = JsonSerializer.Serialize(response, new JsonSerializerOptions
+                    {
+                        PropertyNamingPolicy = JsonNamingPolicy.CamelCase
                     });
 
-                    var errorContent = JsonSerializer.Serialize(error);
-                    context.Response.ContentType = "application/json";
-                    context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                    await context.Response.WriteAsync(errorContent);
-                }
-
-                ));
+                    await context.Response.WriteAsync(json);
+                });
+            });
         }
     }
 

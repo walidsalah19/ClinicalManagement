@@ -16,10 +16,10 @@ namespace ClinicalManagement.Controllers
         }
 
         [HttpPost("Pationt")]
-        public IActionResult CreatePatient([FromBody] CreateUserCommand user)
+        public async Task<IActionResult> CreatePatient([FromBody] CreateUserCommand user)
         {
-           var res= mediator.Send(user);
-            return Ok(res);
+           var res=await mediator.Send(user);
+            return  Ok(res);
         }
     }
 }
