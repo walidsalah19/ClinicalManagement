@@ -1,4 +1,5 @@
-﻿using ClinicalManagement.Application.Roles.Commands;
+﻿using ClinicalManagement.Application.Common.Result;
+using ClinicalManagement.Application.Roles.Commands;
 using ClinicalManagement.Application.Roles.Quires;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -22,13 +23,35 @@ namespace ClinicalManagement.Controllers
         public async Task<IActionResult> GetAllRoles()
         {
             var roles =await mediator.Send(new GetAllRoles());
-            return Ok(roles);
+            return HandleResult(roles);
+
         }
         [HttpPost("CreateRole")]
         public async Task<IActionResult> CreateRole(CreateRoleCommand createRole)
         {
             var res = await mediator.Send(createRole);
-            return Ok(res);
+         return HandleResult(res);
+
         }
+        [HttpDelete("DeleteRole")]
+        public async Task<IActionResult> DeleteRole(DeleteRoleCommand role)
+        {
+            var res = await mediator.Send(role);
+            return HandleResult(res);
+        }
+
+
+
+
+        public IActionResult HandleResult<T>(Result<T> result)
+        {
+            
+
+            if (!result.isSuccessed)
+                return BadRequest(result);
+            else if (result ==null)
+                return NotFound();
+            return Ok(result);
+        } 
     }
 }

@@ -33,9 +33,20 @@ namespace ClinicalManagement.Infrastructure.Services
             return Result<string>.Success(res.Result.ToString());
         }
 
-        public Task<Result<string>> DeleteRoleAsync(string roleId)
+        public async Task<Result<string>> DeleteRoleAsync(string roleId)
         {
-            throw new NotImplementedException();
+
+            var res=await  roleManager.DeleteAsync(new IdentityRole { Id=roleId});
+            if (res.Succeeded)
+            {
+                return Result<string>.Success("delete role Successed "+res.Succeeded.ToString());
+            }
+            else
+            {
+                var errors = res.Errors.Select(r => new Error(message: r.Description, r.Code)).ToList();
+                return Result<string>.Failure(errors);
+            }
+            
         }
 
         public async Task<Result<List<RoleDto>>> GetAllRolesAsync()
@@ -55,9 +66,24 @@ namespace ClinicalManagement.Infrastructure.Services
             return await roleManager.RoleExistsAsync(roleName);
         }
 
-        public Task<Result<string>> UpdateRoleNameAsync(string roleId, string newName)
+        public async Task<Result<string>> UpdateRoleNameAsync(string roleId, string newName)
         {
-            throw new NotImplementedException();
+           var role= await roleManager.FindByIdAsync(roleId);
+            if (await RoleExistsAsync(newName))
+            {
+                return Result<string>.Failure(new Error(
+                    message: "This role name is Exixt",
+                    code: ErrorCodes.AlreadyExists.ToString()));
+            }
+            else if (role==null)
+            {
+                return Result<string>.Failure(new Error(
+                    message: "This role isn't  Exixt",
+                    code: ErrorCodes.AlreadyExists.ToString()));
+            }
+            role.Name = newName;
+            var res = roleManager.UpdateAsync(role);
+            return Result<string>.Success(res.Result.ToString());
         }
     }
 }
