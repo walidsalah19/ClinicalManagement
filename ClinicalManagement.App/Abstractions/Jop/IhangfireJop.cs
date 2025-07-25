@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClinicalManagement.Application.Abstractions
+namespace ClinicalManagement.Application.Abstractions.Jop
 {
     public interface IhangfireJop
     {
