@@ -1,4 +1,4 @@
-﻿using ClinicalManagement.Application.Abstractions;
+﻿using ClinicalManagement.Application.Abstractions.Jop;
 using System;
 using System.Collections.Generic;
 using System.Linq;

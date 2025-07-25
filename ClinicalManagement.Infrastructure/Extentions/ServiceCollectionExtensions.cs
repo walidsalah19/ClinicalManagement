@@ -14,8 +14,10 @@ using Microsoft.Extensions.Logging;
 using ClinicalManagement.Infrastructure.Jop;
 using MediatR;
 using Hangfire;
-using ClinicalManagement.Application.Abstractions;
 using FluentValidation;
+using ClinicalManagement.Application.Abstractions.Jop;
+using ClinicalManagement.Application.Abstractions.Services;
+using ClinicalManagement.Infrastructure.Services;
 
 namespace ClinicalManagement.Infrastructure.Extentions
 {
@@ -43,7 +45,9 @@ namespace ClinicalManagement.Infrastructure.Extentions
             
 
             services.AddScoped<IhangfireJop, HangfireJop>();
-        
+            services.AddScoped<IRoleServices, RoleServices>();
+
+
             return services;
         }
     }
