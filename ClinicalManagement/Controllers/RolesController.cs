@@ -19,22 +19,28 @@ namespace ClinicalManagement.Controllers
         {
             this.mediator = mediator;
         }
-        [HttpGet("AllRoles")]
+        [HttpGet("Roles")]
         public async Task<IActionResult> GetAllRoles()
         {
             var roles =await mediator.Send(new GetAllRoles());
             return HandleResult(roles);
 
         }
-        [HttpPost("CreateRole")]
+        [HttpPost("Role")]
         public async Task<IActionResult> CreateRole(CreateRoleCommand createRole)
         {
             var res = await mediator.Send(createRole);
          return HandleResult(res);
 
         }
-        [HttpDelete("DeleteRole")]
+        [HttpDelete("Role")]
         public async Task<IActionResult> DeleteRole(DeleteRoleCommand role)
+        {
+            var res = await mediator.Send(role);
+            return HandleResult(res);
+        }
+        [HttpPut("Role")]
+        public async Task<IActionResult> UpdateRole(UpdateRoleCommand role)
         {
             var res = await mediator.Send(role);
             return HandleResult(res);

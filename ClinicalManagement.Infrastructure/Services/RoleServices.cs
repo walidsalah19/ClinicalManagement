@@ -51,14 +51,21 @@ namespace ClinicalManagement.Infrastructure.Services
 
         public async Task<Result<List<RoleDto>>> GetAllRolesAsync()
         {
-            var roles = await roleManager.Roles.ToListAsync();
-            var roleDtos = roles.Select(r => new RoleDto { RoleId = r.Id, RoleName = r.Name }).ToList();
-            return  Result<List<RoleDto>>.Success(roleDtos);
+            var roles = await roleManager.Roles.
+            Select(r => new RoleDto { RoleId = r.Id, RoleName = r.Name }).ToListAsync();
+            return  Result<List<RoleDto>>.Success(roles);
         }
 
-        public Task<Result<string>?> GetRoleByIdAsync(string roleId)
+        public async Task<Result<string>?> GetRoleByIdAsync(string roleId)
         {
-            throw new NotImplementedException();
+            var role =await roleManager.FindByIdAsync(roleId);
+            if(role is null)
+            {
+                return Result<string>.Failure(new Error(
+                   message: "This role isn't  Exixt",
+                   code: ErrorCodes.AlreadyExists.ToString()));
+            }
+            return Result<String>.Success(role.Name);
         }
 
         public async Task<bool> RoleExistsAsync(string roleName)
