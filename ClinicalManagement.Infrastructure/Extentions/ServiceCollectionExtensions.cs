@@ -46,7 +46,7 @@ namespace ClinicalManagement.Infrastructure.Extentions
 
             services.AddScoped<IhangfireJop, HangfireJop>();
             services.AddScoped<IRoleServices, RoleServices>();
-
+            services.AddScoped<IUsersServices, UsersServices>();
 
             return services;
         }

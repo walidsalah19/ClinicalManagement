@@ -14,7 +14,7 @@ namespace ClinicalManagement.Domain.Models
         public string? Biography { get; set; }
 
 
-        public ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();
-        public ICollection<Prescription> Prescriptions { get; set; } = new List<Prescription>();
+       /* public ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();
+        public ICollection<Prescription> Prescriptions { get; set; } = new List<Prescription>();*/
     }
 }

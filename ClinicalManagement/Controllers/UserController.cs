@@ -15,11 +15,18 @@ namespace ClinicalManagement.Controllers
             this.mediator = mediator;
         }
 
-        [HttpPost("Pationt")]
+        [HttpPost("Patient")]
         public async Task<IActionResult> CreatePatient([FromBody] CreateUserCommand user)
         {
            var res=await mediator.Send(user);
             return  Ok(res);
+        }
+
+        [HttpPost("Admin")]
+        public async Task<IActionResult> CreateAdmin([FromBody] CreateUserCommand user)
+        {
+            var res = await mediator.Send(user);
+            return Ok(res);
         }
     }
 }
