@@ -1,4 +1,5 @@
 ﻿using ClinicalManagement.Domain.Entities;
+using ClinicalManagement.Domain.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,7 @@ namespace ClinicalManagement.Infrastructure.Data
 {
     public class AppDbContext : IdentityDbContext<UsersModel>
     {
+        public DbSet<Patient> Patients { get; set; }
         public AppDbContext(DbContextOptions options) : base(options)
         {
         }

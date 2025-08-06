@@ -1,4 +1,5 @@
-﻿using ClinicalManagement.Application.Common.Result;
+﻿using ClinicalManagement.Application.Abstractions.Services;
+using ClinicalManagement.Application.Common.Result;
 using ClinicalManagement.Application.User.Commands;
 using ClinicalManagement.Domain.Entities;
 using MediatR;
@@ -10,20 +11,22 @@ using System.Threading.Tasks;
 
 namespace ClinicalManagement.Application.User.Handlers
 {
-    public class CreateUserHandler : IRequestHandler<CreateUserCommand, Result<Guid>>
+    public class CreateUserHandler : IRequestHandler<CreateUserCommand, Result<string>>
     {
-        public CreateUserHandler()
+        private readonly IUsersServices usersServices;
+
+        public CreateUserHandler(IUsersServices usersServices)
         {
+            this.usersServices = usersServices;
         }
 
-        public  Task<Result<Guid>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+        public async Task<Result<string>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
-            var guid = Guid.NewGuid();
-            request.Address = guid.ToString();
-          
-            return Task.FromResult(Result<Guid>.Success(guid));
+           var user= new UsersModel {UserName=request.FullName,Email=request.Email,PhoneNumber=request.PhoneNumber
+               ,BirthDate=request.BirthDate,Gender=request.Gender,PasswordHash=request.Password
+               ,NationalId=request.NationalId, Address = request.Address };
+            var res = await usersServices.CreateUserAsync(user, request.Role);
+            return res;
         }
-
-       
     }
 }

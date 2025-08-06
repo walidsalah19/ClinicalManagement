@@ -21,22 +21,23 @@ namespace ClinicalManagement.Infrastructure.Reposatories
         public async Task AddAsync(T entity)
         {
             await dbContext.Set<T>().AddAsync(entity);
-            return ;
         }
 
-        public Task<T> GetEntityById(string id)
+        public async Task<T> GetEntityById(string id)
         {
-            throw new NotImplementedException();
+            return await dbContext.Set<T>().FindAsync(id);
         }
 
-        public Task Remove(T entity)
+        public  Task Remove(T entity)
         {
-            throw new NotImplementedException();
+            dbContext.Set<T>().Remove(entity);
+            return Task.CompletedTask;
         }
 
-        public Task UpdateAsync(T entity)
+        public  Task UpdateAsync(T entity)
         {
-            throw new NotImplementedException();
+             dbContext.Set<T>().Update(entity);
+             return Task.CompletedTask;
         }
     }
 }
