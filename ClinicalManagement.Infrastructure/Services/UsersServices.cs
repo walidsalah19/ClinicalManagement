@@ -1,12 +1,15 @@
-﻿using ClinicalManagement.Application.Abstractions.Services;
+﻿using Azure.Core;
+using ClinicalManagement.Application.Abstractions.Services;
 using ClinicalManagement.Application.Common.Result;
 using ClinicalManagement.Domain.Entities;
 using ClinicalManagement.Infrastructure.Data;
+using ClinicalManagement.Infrastructure.Migrations;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -23,12 +26,12 @@ namespace ClinicalManagement.Infrastructure.Services
             this.appDbContext = appDbContext;
         }
 
-        public async Task<Result<string>> CreateUserAsync(UsersModel user, string role)
+        public async Task<Result<string>> CreateUserAsync(UsersModel user, string role,string Password)
         {
             using (var transaction = appDbContext.Database.BeginTransaction())
             {
 
-                var createResult = await userManager.CreateAsync(user);
+                var createResult = await userManager.CreateAsync(user,Password);
 
                 if (!createResult.Succeeded)
                 {
@@ -58,19 +61,58 @@ namespace ClinicalManagement.Infrastructure.Services
         }
 
 
-        public Task<Result<string>> DeleteUserAsync<TKey>(TKey id)
+        public async Task<Result<string>> DeleteUserAsync(string userId)
         {
-            throw new NotImplementedException();
+            var user = await FinduserById(userId);
+            if (user == null)
+            {
+                return Result<string>.Failure("User not found.");
+            }
+            var deleteResult = await userManager.DeleteAsync(user);
+
+            if (deleteResult.Succeeded)
+            {
+                return Result<string>.Success("User deleted successfully.");
+            }
+            else
+            {
+                var errors = deleteResult.Errors
+                    .Select(e => new Error(e.Description, e.Code))
+                    .ToList();
+                return Result<string>.Failure(errors);
+            }
         }
 
-        public Task<Result<List<UsersModel>>> GetAllUsersAsync()
+        public async Task<UsersModel> FinduserById(string id)
         {
-            throw new NotImplementedException();
+            return await userManager.FindByIdAsync(id);
         }
 
-        public Task<Result<string>> UpdateUserAsync(UsersModel user)
+        public async Task<Result<IQueryable<UsersModel>>> GetAllUsersAsync(Expression<Func<UsersModel,bool>> expression)
         {
-            throw new NotImplementedException();
+            var res = userManager.Users.Where(expression);
+            return Result<IQueryable<UsersModel>>.Success(res);
+        }
+
+        public async Task<Result<string>> UpdateUserAsync(UsersModel user)
+        {
+            var find = await FinduserById(user.Id);
+            if (find == null)
+            {
+                return Result<string>.Failure("User not found.");
+            }
+            var updateRes = await userManager.UpdateAsync(user);
+            if (updateRes.Succeeded)
+            {
+                return Result<string>.Success("User deleted successfully.");
+            }
+            else
+            {
+                var errors = updateRes.Errors
+                    .Select(e => new Error(e.Description, e.Code))
+                    .ToList();
+                return Result<string>.Failure(errors);
+            }
         }
     }
 }
