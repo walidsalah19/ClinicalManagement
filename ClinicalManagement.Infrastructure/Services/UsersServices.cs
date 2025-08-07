@@ -15,104 +15,77 @@ using System.Threading.Tasks;
 
 namespace ClinicalManagement.Infrastructure.Services
 {
-    public class UsersServices : IUsersServices
+    public class UsersServices<TUser> : IUsersServices<TUser> where TUser : IdentityUser
     {
-        private readonly UserManager<UsersModel> userManager;
+        private readonly UserManager<TUser> userManager;
         private readonly AppDbContext appDbContext;
 
-        public UsersServices(UserManager<UsersModel> userManager, AppDbContext appDbContext)
+        public UsersServices(UserManager<TUser> userManager, AppDbContext appDbContext)
         {
             this.userManager = userManager;
             this.appDbContext = appDbContext;
         }
 
-        public async Task<Result<string>> CreateUserAsync(UsersModel user, string role,string Password)
+        public async Task<Result<string>> CreateAsync(TUser user, string role, string password)
         {
-            using (var transaction = appDbContext.Database.BeginTransaction())
+            using var transaction = await appDbContext.Database.BeginTransactionAsync();
+
+            var createResult = await userManager.CreateAsync(user, password);
+            if (!createResult.Succeeded)
             {
-
-                var createResult = await userManager.CreateAsync(user,Password);
-
-                if (!createResult.Succeeded)
-                {
-                   // await transaction.RollbackAsync();
-                    var createErrors = createResult.Errors
-                        .Select(e => new Error(e.Description, e.Code))
-                        .ToList();
-                    return Result<string>.Failure(createErrors);
-                }
-
-                var roleResult = await userManager.AddToRoleAsync(user, role);
-                if (!roleResult.Succeeded)
-                {
-                    await transaction.RollbackAsync();
-
-                    // rollback: delete the user if role assignment failed
-                  //  await userManager.DeleteAsync(user);
-
-                    var roleErrors = roleResult.Errors
-                        .Select(e => new Error(e.Description, e.Code))
-                        .ToList();
-                    return Result<string>.Failure(roleErrors);
-                }
-                await transaction.CommitAsync();
-                return Result<string>.Success("User created successfully.");
+                var errors = createResult.Errors
+                    .Select(e => new Error(e.Description, e.Code))
+                    .ToList();
+                return Result<string>.Failure(errors);
             }
+
+            var roleResult = await userManager.AddToRoleAsync(user, role);
+            if (!roleResult.Succeeded)
+            {
+                await transaction.RollbackAsync();
+                var errors = roleResult.Errors
+                    .Select(e => new Error(e.Description, e.Code))
+                    .ToList();
+                return Result<string>.Failure(errors);
+            }
+
+            await transaction.CommitAsync();
+            return Result<string>.Success("User created successfully.");
         }
 
-
-        public async Task<Result<string>> DeleteUserAsync(string userId)
+        public async Task<Result<string>> DeleteAsync(string userId)
         {
-            var user = await FinduserById(userId);
+            var user = await userManager.FindByIdAsync(userId);
             if (user == null)
-            {
                 return Result<string>.Failure("User not found.");
-            }
-            var deleteResult = await userManager.DeleteAsync(user);
 
-            if (deleteResult.Succeeded)
-            {
+            var result = await userManager.DeleteAsync(user);
+            if (result.Succeeded)
                 return Result<string>.Success("User deleted successfully.");
-            }
-            else
-            {
-                var errors = deleteResult.Errors
-                    .Select(e => new Error(e.Description, e.Code))
-                    .ToList();
-                return Result<string>.Failure(errors);
-            }
+
+            var errors = result.Errors.Select(e => new Error(e.Description, e.Code)).ToList();
+            return Result<string>.Failure(errors);
         }
 
-        public async Task<UsersModel> FinduserById(string id)
+        
+
+        public async Task<Result<IQueryable<TUser>>> GetAllAsync()
         {
-            return await userManager.FindByIdAsync(id);
+            return Result<IQueryable<TUser>>.Success(userManager.Users);
         }
 
-        public async Task<Result<IQueryable<UsersModel>>> GetAllUsersAsync(Expression<Func<UsersModel,bool>> expression)
+        public async Task<Result<string>> UpdateAsync(TUser user)
         {
-            var res = userManager.Users.Where(expression);
-            return Result<IQueryable<UsersModel>>.Success(res);
-        }
-
-        public async Task<Result<string>> UpdateUserAsync(UsersModel user)
-        {
-            var find = await FinduserById(user.Id);
-            if (find == null)
-            {
+            var existing = await userManager.FindByIdAsync(user.Id);
+            if (existing == null)
                 return Result<string>.Failure("User not found.");
-            }
-            var updateRes = await userManager.UpdateAsync(user);
-            if (updateRes.Succeeded)
-            {
-                return Result<string>.Success("User deleted successfully.");
-            }
-            else
-            {
-                var errors = updateRes.Errors
-                    .Select(e => new Error(e.Description, e.Code))
-                    .ToList();
-                return Result<string>.Failure(errors);
-            }
+
+            var result = await userManager.UpdateAsync(user);
+            if (result.Succeeded)
+                return Result<string>.Success("User updated successfully.");
+
+            var errors = result.Errors.Select(e => new Error(e.Description, e.Code)).ToList();
+            return Result<string>.Failure(errors);
         }
     }
 }

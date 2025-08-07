@@ -18,6 +18,9 @@ using FluentValidation;
 using ClinicalManagement.Application.Abstractions.Jop;
 using ClinicalManagement.Application.Abstractions.Services;
 using ClinicalManagement.Infrastructure.Services;
+using ClinicalManagement.Domain.Interfaces;
+using ClinicalManagement.Infrastructure.Reposatories;
+using ClinicalManagement.Domain.Models;
 
 namespace ClinicalManagement.Infrastructure.Extentions
 {
@@ -42,11 +45,17 @@ namespace ClinicalManagement.Infrastructure.Extentions
                 config.UseSqlServerStorage(connection);
             });
              services.AddHangfireServer();
-            
+
+
 
             services.AddScoped<IhangfireJop, HangfireJop>();
             services.AddScoped<IRoleServices, RoleServices>();
-            services.AddScoped<IUsersServices, UsersServices>();
+            services.AddScoped(typeof(IBaseReposatory<>), typeof(BaseReposatory<>));
+            services.AddScoped(typeof(IUsersServices<Patient>), typeof(UsersServices<Patient>));
+            services.AddScoped(typeof(IUsersServices<Doctor>), typeof(UsersServices<Doctor>));
+            services.AddScoped(typeof(IUsersServices<Admin>), typeof(UsersServices<Admin>));
+
+            // services.AddScoped<IUsersServices<UsersModel>, UsersServices<UsersModel>();
 
             return services;
         }

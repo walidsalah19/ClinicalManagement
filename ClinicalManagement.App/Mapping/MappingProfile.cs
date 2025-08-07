@@ -2,6 +2,7 @@
 using ClinicalManagement.Application.Dtos.UserDtos;
 using ClinicalManagement.Application.User.Commands;
 using ClinicalManagement.Domain.Entities;
+using ClinicalManagement.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,8 +15,8 @@ namespace ClinicalManagement.Application.Mapping
     {
         public MappingProfile()
         {
-            CreateMap<UserDto, UsersModel>();
-            CreateMap<UsersModel, CreateUserDto>()
+           // CreateMap<UserDto, UsersModel>();
+            CreateMap<Patient, CreateUserDto>()
                 .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.UserName))
                 .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Address))
                 .ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(src => src.PhoneNumber))
@@ -24,7 +25,7 @@ namespace ClinicalManagement.Application.Mapping
                 .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => src.Gender))
                 .ForMember(dest => dest.NationalId, opt => opt.MapFrom(src => src.NationalId));
 
-            CreateMap<CreateUserDto, UsersModel>()
+            CreateMap<CreateUserDto, Patient>()
                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.UserName))
                .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Address))
                .ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(src => src.PhoneNumber))
@@ -32,6 +33,12 @@ namespace ClinicalManagement.Application.Mapping
                .ForMember(dest => dest.BirthDate, opt => opt.MapFrom(src => src.BirthDate))
                .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => src.Gender))
                .ForMember(dest => dest.NationalId, opt => opt.MapFrom(src => src.NationalId));
+
+
+            CreateMap<CreateAdminDto, Admin>()
+              .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.UserName))
+              .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
+              .ForMember(dest => dest.NationalId, opt => opt.MapFrom(src => src.NationalId));
 
         }
     }
