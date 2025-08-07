@@ -1,6 +1,7 @@
 ﻿using ClinicalManagement.Application.Common.Result;
 using ClinicalManagement.Application.Dtos;
 using ClinicalManagement.Domain.Entities;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,12 +11,11 @@ using System.Threading.Tasks;
 
 namespace ClinicalManagement.Application.Abstractions.Services
 {
-    public interface IUsersServices
+    public interface IUsersServices<TUser> where TUser : class
     {
-        public Task<Result<IQueryable<UsersModel>>> GetAllUsersAsync(Expression<Func<UsersModel, bool>> expression);
-        Task<Result<string>> CreateUserAsync(UsersModel user, string role, string Password);
-        Task<Result<string>> DeleteUserAsync(string userId);
-        Task<Result<string>> UpdateUserAsync(UsersModel user);
-        Task<UsersModel> FinduserById(string id);
+        Task<Result<IQueryable<TUser>>> GetAllAsync();
+        Task<Result<string>> CreateAsync(TUser user, string role, string Password);
+        Task<Result<string>> DeleteAsync(string userId);
+        Task<Result<string>> UpdateAsync(TUser user);
     }
 }

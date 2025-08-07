@@ -13,21 +13,21 @@ using System.Threading.Tasks;
 
 namespace ClinicalManagement.Application.User.Handlers
 {
-    public class CreateUserHandler : IRequestHandler<CreateUserCommand, Result<string>>
+    public class CreateAdminHandler : IRequestHandler<CreateAdminCommand, Result<string>>
     {
-        private readonly IUsersServices<Patient> usersServices;
+        private readonly IUsersServices<UsersModel> usersServices;
         private readonly IMapper mapper;
 
-        public CreateUserHandler(IUsersServices<Patient> usersServices, IMapper mapper)
+        public CreateAdminHandler(IUsersServices<UsersModel> usersServices, IMapper mapper)
         {
             this.usersServices = usersServices;
             this.mapper = mapper;
         }
 
-        public async Task<Result<string>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+        public async Task<Result<string>> Handle(CreateAdminCommand request, CancellationToken cancellationToken)
         {
-            var user = mapper.Map<Patient>(request.userDto);
-            var res = await usersServices.CreateAsync(user, request.userDto.Role,request.userDto.Password);
+            var admin = mapper.Map<Admin>(request.adminDto);
+            var res =await usersServices.CreateAsync(admin, request.adminDto.Role, request.adminDto.Password);
             return res;
         }
     }

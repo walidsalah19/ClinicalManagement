@@ -23,11 +23,11 @@ namespace ClinicalManagement.Controllers
             return  Ok(res);
         }
 
-       /* [HttpPost("Admin")]
-        public async Task<IActionResult> CreateAdmin([FromBody] CreateUserCommand user)
+        [HttpPost("Admin")]
+        public async Task<IActionResult> CreateAdmin([FromBody] CreateAdminDto admin)
         {
-            var res = await mediator.Send(user);
+            var res = await mediator.Send(new CreateAdminCommand { adminDto=admin});
             return Ok(res);
-        }*/
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ClinicalManagement.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -32,5 +33,7 @@ namespace ClinicalManagement.Application.Common.Result
         {
             return isSuccessed ? onSuccess(Value!) : onFailure(Error!);
         }
+
+        
     }
 }
