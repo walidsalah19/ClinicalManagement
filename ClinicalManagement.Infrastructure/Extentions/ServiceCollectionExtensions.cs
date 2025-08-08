@@ -51,9 +51,7 @@ namespace ClinicalManagement.Infrastructure.Extentions
             services.AddScoped<IhangfireJop, HangfireJop>();
             services.AddScoped<IRoleServices, RoleServices>();
             services.AddScoped(typeof(IBaseReposatory<>), typeof(BaseReposatory<>));
-            services.AddScoped(typeof(IUsersServices<Patient>), typeof(UsersServices<Patient>));
-            services.AddScoped(typeof(IUsersServices<Doctor>), typeof(UsersServices<Doctor>));
-            services.AddScoped(typeof(IUsersServices<Admin>), typeof(UsersServices<Admin>));
+            services.AddScoped(typeof(IUsersServices), typeof(UsersServices));
 
             // services.AddScoped<IUsersServices<UsersModel>, UsersServices<UsersModel>();
 

@@ -15,10 +15,10 @@ namespace ClinicalManagement.Application.User.Handlers
 {
     public class CreateAdminHandler : IRequestHandler<CreateAdminCommand, Result<string>>
     {
-        private readonly IUsersServices<UsersModel> usersServices;
+        private readonly IUsersServices usersServices;
         private readonly IMapper mapper;
 
-        public CreateAdminHandler(IUsersServices<UsersModel> usersServices, IMapper mapper)
+        public CreateAdminHandler(IUsersServices usersServices, IMapper mapper)
         {
             this.usersServices = usersServices;
             this.mapper = mapper;
