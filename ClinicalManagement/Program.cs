@@ -33,7 +33,7 @@ namespace ClinicalManagement
             builder.Services.AddApplicationServices();
 
             builder.Services.AddApiServices();
-
+            builder.Host.UseSerilog();
             /*builder.Services.AddSwaggerServices();
             builder.Services.AddAuthServices();*/
             var app = builder.Build();

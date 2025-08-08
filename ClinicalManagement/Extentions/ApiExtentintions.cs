@@ -23,11 +23,13 @@ namespace ClinicalManagement.Extentions
 
             //استخدام ال serilog عشان نعمل logging 
             Log.Logger = new LoggerConfiguration()
+                        .MinimumLevel.Debug()
+                        .WriteTo.Console() // عرض في الكونسول
+                        .WriteTo.Seq("http://localhost:5341") // رابط الـ Seq
                         .Enrich.FromLogContext()
                         .Enrich.WithEnvironmentName()
                         .Enrich.WithMachineName()
                         .Enrich.WithThreadId()
-                        .WriteTo.Console()
                         .CreateLogger();
 
 
