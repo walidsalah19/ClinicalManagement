@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Serilog;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
@@ -49,7 +50,7 @@ public class LoggingMiddleware
             context.Request.Body.Position = 0;
             builder.AppendLine($"Body: {body}");
         }
-
+       
         _logger.LogInformation(builder.ToString());
     }
 
