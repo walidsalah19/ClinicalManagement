@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using ClinicalManagement.Application.Dtos.UserDtos;
+using ClinicalManagement.Application.Dtos.UserDtos.Commands;
 using ClinicalManagement.Application.User.Commands;
 using ClinicalManagement.Domain.Entities;
 using ClinicalManagement.Domain.Models;
@@ -16,7 +16,7 @@ namespace ClinicalManagement.Application.Mapping
         public MappingProfile()
         {
            // CreateMap<UserDto, UsersModel>();
-            CreateMap<Patient, CreateUserDto>()
+            CreateMap<Patient, CreatePatient>()
                 .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.UserName))
                 .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Address))
                 .ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(src => src.PhoneNumber))
@@ -25,7 +25,7 @@ namespace ClinicalManagement.Application.Mapping
                 .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => src.Gender))
                 .ForMember(dest => dest.NationalId, opt => opt.MapFrom(src => src.NationalId));
 
-            CreateMap<CreateUserDto, Patient>()
+            CreateMap<CreatePatient, Patient>()
                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.UserName))
                .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Address))
                .ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(src => src.PhoneNumber))
@@ -35,10 +35,23 @@ namespace ClinicalManagement.Application.Mapping
                .ForMember(dest => dest.NationalId, opt => opt.MapFrom(src => src.NationalId));
 
 
-            CreateMap<CreateAdminDto, Admin>()
+            CreateMap<CreateAdmin, Admin>()
               .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.UserName))
               .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
               .ForMember(dest => dest.NationalId, opt => opt.MapFrom(src => src.NationalId));
+
+
+            CreateMap<CreateDoctor, Doctor>()
+               /*.ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.UserName))
+               .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Address))
+               .ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(src => src.PhoneNumber))
+               .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
+               .ForMember(dest => dest.BirthDate, opt => opt.MapFrom(src => src.BirthDate))
+               .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => src.Gender))
+               .ForMember(dest => dest.Biography, opt => opt.MapFrom(src => src.Biography))
+               .ForMember(dest => dest.Specialization, opt => opt.MapFrom(src => src.Specialization))
+               .ForMember(dest => dest.Specialization, opt => opt.MapFrom(src => src.Specialization))
+               .ForMember(dest => dest.NationalId, opt => opt.MapFrom(src => src.NationalId))*/;
 
         }
     }
