@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 
 namespace ClinicalManagement.Application.User.Commands
 {
-   public  class CreateAdminCommand :IRequest<Result<string>>
+    public class CreateDoctorCommand :IRequest<Result<string>>
     {
-       public  CreateAdmin adminDto { get; set; }
+        public CreateDoctor CreateDoctor { get; set; }
     }
 }

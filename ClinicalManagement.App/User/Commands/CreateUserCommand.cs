@@ -1,5 +1,5 @@
 ﻿using ClinicalManagement.Application.Common.Result;
-using ClinicalManagement.Application.Dtos.UserDtos;
+using ClinicalManagement.Application.Dtos.UserDtos.Commands;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ namespace ClinicalManagement.Application.User.Commands
 {
     public class CreateUserCommand:IRequest<Result<string>>
     {
-        public CreateUserDto userDto { get; set; }
+        public CreatePatient userDto { get; set; }
 
     }
 }
