@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ClinicalManagement.Infrastructure.Reposatories
 {
-    class BaseReposatory<T> : IBaseReposatory<T> where T : class
+   public class BaseReposatory<T> : IBaseReposatory<T> where T : class
     {
         private readonly AppDbContext dbContext;
 
