@@ -1,7 +1,6 @@
 
 using ClinicalManagement.Application.Behavier;
 using ClinicalManagement.Application.Extentions;
-using ClinicalManagement.Application.User.Commands;
 using ClinicalManagement.Application.Validations;
 using ClinicalManagement.Domain.Entities;
 using ClinicalManagement.Extentions;

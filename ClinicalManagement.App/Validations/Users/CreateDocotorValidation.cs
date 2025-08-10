@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ClinicalManagement.Application.Validations.Users
 {
-    public class CreateDocotorValidation : AbstractValidator<CreateDoctor>
+    public class CreateDocotorValidation : AbstractValidator<CreateDoctorDto>
     {
         public CreateDocotorValidation()
         {

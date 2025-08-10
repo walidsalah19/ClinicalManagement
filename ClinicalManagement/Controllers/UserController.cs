@@ -1,6 +1,10 @@
-﻿using ClinicalManagement.Application.Dtos.UserDtos.Commands;
-using ClinicalManagement.Application.User.Commands;
-using ClinicalManagement.Application.User.Queries;
+﻿using ClinicalManagement.Application.Common.Result;
+using ClinicalManagement.Application.Dtos.UserDtos.Commands;
+using ClinicalManagement.Application.User.AllDoctors;
+using ClinicalManagement.Application.User.AllPatients;
+using ClinicalManagement.Application.User.CreateAdmin;
+using ClinicalManagement.Application.User.CreateDoctor;
+using ClinicalManagement.Application.User.CreatePatient;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,31 +20,56 @@ namespace ClinicalManagement.Controllers
         {
             this.mediator = mediator;
         }
-
-        [HttpPost("patient")]
-        public async Task<IActionResult> CreatePatient([FromBody] CreatePatient user)
-        {
-           var res=await mediator.Send(new CreateUserCommand { userDto=user});
-            return  Ok(res);
-        }
-
         [HttpPost("admin")]
-        public async Task<IActionResult> CreateAdmin([FromBody] CreateAdmin admin)
+        public async Task<IActionResult> CreateAdmin([FromBody] CreateAdminDto admin)
         {
-            var res = await mediator.Send(new CreateAdminCommand { adminDto=admin});
-            return Ok(res);
+            var res = await mediator.Send(new CreateAdminCommand { adminDto = admin });
+            return HandleResult(res);
         }
         [HttpPost("doctor")]
-        public async Task<IActionResult> CreateDoctor([FromBody] CreateDoctor doctor)
+        public async Task<IActionResult> CreateDoctor([FromBody] CreateDoctorDto doctor)
         {
             var res = await mediator.Send(new CreateDoctorCommand { CreateDoctor = doctor });
-            return Ok(res);
+            return HandleResult(res);
         }
         [HttpGet("doctors")]
         public async Task<IActionResult> AllDoctors()
         {
-            var res = await mediator.Send(new AllDoctorsQuery ());
-            return Ok(res);
+            var res = await mediator.Send(new AllDoctorsQuery());
+            return HandleResult(res);
         }
+
+        [HttpPost("patient")]
+        public async Task<IActionResult> CreatePatient([FromBody] CreatePatientDto user)
+        {
+           var res=await mediator.Send(new CreateUserCommand { userDto=user});
+            return HandleResult(res);
+        }
+        [HttpGet("patients")]
+        public async Task<IActionResult> AllPatients()
+        {
+            var res = await mediator.Send(new AllPatientQuery());
+            return HandleResult(res);
+        }
+
+
+
+
+
+
+
+
+
+        public IActionResult HandleResult<T>(Result<T> result)
+        {
+
+
+            if (!result.isSuccessed)
+                return BadRequest(result);
+            else if (result == null)
+                return NotFound();
+            return Ok(result);
+        }
+
     }
 }

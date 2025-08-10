@@ -8,7 +8,6 @@ namespace ClinicalManagement.Application.Dtos.UserDtos.Queries
 {
     public class DoctorDto : UserDto
     {
-        
         public string Id { get; set; }
         public string Specialization { get; set; }
         public string Qualification { get; set; }

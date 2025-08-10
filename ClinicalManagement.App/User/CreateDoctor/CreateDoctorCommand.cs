@@ -11,6 +11,6 @@ namespace ClinicalManagement.Application.User.CreateDoctor
 {
     public class CreateDoctorCommand :IRequest<Result<string>>
     {
-        public CreateDoctor CreateDoctor { get; set; }
+        public CreateDoctorDto CreateDoctor { get; set; }
     }
 }

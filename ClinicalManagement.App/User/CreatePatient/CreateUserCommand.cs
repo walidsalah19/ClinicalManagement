@@ -11,7 +11,7 @@ namespace ClinicalManagement.Application.User.CreatePatient
 {
     public class CreateUserCommand:IRequest<Result<string>>
     {
-        public CreatePatient userDto { get; set; }
+        public CreatePatientDto userDto { get; set; }
 
     }
 }

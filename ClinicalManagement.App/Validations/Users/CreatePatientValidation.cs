@@ -1,5 +1,4 @@
 ﻿using ClinicalManagement.Application.Dtos.UserDtos.Commands;
-using ClinicalManagement.Application.User.Commands;
 using FluentValidation;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ClinicalManagement.Application.Validations.Users
 {
-    public class CreatePatientValidation : AbstractValidator<CreatePatient>
+    public class CreatePatientValidation : AbstractValidator<CreatePatientDto>
     {
         public CreatePatientValidation()
         {
