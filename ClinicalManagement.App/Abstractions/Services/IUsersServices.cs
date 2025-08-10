@@ -13,7 +13,7 @@ namespace ClinicalManagement.Application.Abstractions.Services
 {
     public interface IUsersServices
     {
-        Task<Result<IQueryable<UsersModel>>> GetAllAsync();
+        Task<IEnumerable<UsersModel>> GetAllAsync(string role);
         Task<Result<string>> CreateAsync(UsersModel user, string role, string password);
         Task<Result<string>> DeleteAsync(string userId);
         Task<Result<string>> UpdateAsync(UsersModel user);

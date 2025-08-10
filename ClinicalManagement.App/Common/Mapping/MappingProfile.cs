@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ClinicalManagement.Application.Dtos.UserDtos.Commands;
+using ClinicalManagement.Application.Dtos.UserDtos.Queries;
 using ClinicalManagement.Application.User.Commands;
 using ClinicalManagement.Domain.Entities;
 using ClinicalManagement.Domain.Models;
@@ -9,21 +10,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClinicalManagement.Application.Mapping
+namespace ClinicalManagement.Application.Common.Mapping
 {
     public class MappingProfile : Profile
     {
         public MappingProfile()
         {
-           // CreateMap<UserDto, UsersModel>();
-            CreateMap<Patient, CreatePatient>()
-                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.UserName))
-                .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Address))
-                .ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(src => src.PhoneNumber))
-                .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
-                .ForMember(dest => dest.BirthDate, opt => opt.MapFrom(src => src.BirthDate))
-                .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => src.Gender))
-                .ForMember(dest => dest.NationalId, opt => opt.MapFrom(src => src.NationalId));
+            CreateMap<Doctor, DoctorDto>();
 
             CreateMap<CreatePatient, Patient>()
                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.UserName))

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClinicalManagement.Application.User.Commands
+namespace ClinicalManagement.Application.User.CreateAdmin
 {
    public  class CreateAdminCommand :IRequest<Result<string>>
     {

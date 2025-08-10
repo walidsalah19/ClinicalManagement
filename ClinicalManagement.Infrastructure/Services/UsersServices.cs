@@ -59,10 +59,10 @@ namespace ClinicalManagement.Infrastructure.Services
                 : Result<string>.Failure(result.Errors.Select(e => e.Description).ToList());
         }
 
-        public Task<Result<IQueryable<UsersModel>>> GetAllAsync()
+        public async Task<IEnumerable<UsersModel>> GetAllAsync(string role)
         {
-            var users = _userManager.Users;
-            return Task.FromResult(Result<IQueryable<UsersModel>>.Success(users));
+            var users =await _userManager.GetUsersInRoleAsync(role);
+            return users;
         }
 
         public async Task<Result<string>> UpdateAsync(UsersModel user)
