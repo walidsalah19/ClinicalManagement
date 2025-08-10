@@ -2,6 +2,7 @@
 using ClinicalManagement.Application.Abstractions.Services;
 using ClinicalManagement.Application.Common.Result;
 using ClinicalManagement.Domain.Entities;
+using ClinicalManagement.Domain.Enums;
 using ClinicalManagement.Domain.Models;
 using ClinicalManagement.Infrastructure.Data;
 using ClinicalManagement.Infrastructure.Migrations;
@@ -51,7 +52,7 @@ namespace ClinicalManagement.Infrastructure.Services
         {
             var user = await _userManager.FindByIdAsync(userId);
             if (user == null)
-                return Result<string>.Failure("User not found");
+                return Result<string>.Failure(new Error(message: "User not found",code:ErrorCodes.NotFound.ToString()));
 
             var result = await _userManager.DeleteAsync(user);
             return result.Succeeded
