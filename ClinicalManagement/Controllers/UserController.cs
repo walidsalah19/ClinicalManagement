@@ -5,6 +5,8 @@ using ClinicalManagement.Application.User.AllPatients;
 using ClinicalManagement.Application.User.CreateAdmin;
 using ClinicalManagement.Application.User.CreateDoctor;
 using ClinicalManagement.Application.User.CreatePatient;
+using ClinicalManagement.Domain.Enums;
+using ClinicalManagement.Extentions;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -24,32 +26,32 @@ namespace ClinicalManagement.Controllers
         public async Task<IActionResult> CreateAdmin([FromBody] CreateAdminDto admin)
         {
             var res = await mediator.Send(new CreateAdminCommand { adminDto = admin });
-            return HandleResult(res);
+            return this.HandleResult(res);
         }
         [HttpPost("doctor")]
         public async Task<IActionResult> CreateDoctor([FromBody] CreateDoctorDto doctor)
         {
             var res = await mediator.Send(new CreateDoctorCommand { CreateDoctor = doctor });
-            return HandleResult(res);
+            return this.HandleResult(res);
         }
         [HttpGet("doctors")]
         public async Task<IActionResult> AllDoctors()
         {
             var res = await mediator.Send(new AllDoctorsQuery());
-            return HandleResult(res);
+            return this.HandleResult(res);
         }
 
         [HttpPost("patient")]
         public async Task<IActionResult> CreatePatient([FromBody] CreatePatientDto user)
         {
            var res=await mediator.Send(new CreateUserCommand { userDto=user});
-            return HandleResult(res);
+            return this.HandleResult(res);
         }
         [HttpGet("patients")]
         public async Task<IActionResult> AllPatients()
         {
             var res = await mediator.Send(new AllPatientQuery());
-            return HandleResult(res);
+            return this.HandleResult(res);
         }
 
 
@@ -60,16 +62,7 @@ namespace ClinicalManagement.Controllers
 
 
 
-        public IActionResult HandleResult<T>(Result<T> result)
-        {
-
-
-            if (!result.isSuccessed)
-                return BadRequest(result);
-            else if (result == null)
-                return NotFound();
-            return Ok(result);
-        }
+        
 
     }
 }

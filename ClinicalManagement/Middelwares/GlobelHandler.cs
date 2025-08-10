@@ -29,8 +29,8 @@ namespace ClinicalManagement.Middelwares
                         (
                             //Property = error.PropertyName,
                             message: error.ErrorMessage,
-                            //Code = error.ErrorCode,
-                            code: statusCode.ToString()
+                            code : error.ErrorCode
+                            //code: statusCode.ToString()
                         ));
 
                         response = Result<object>.Failure(errors);
