@@ -9,7 +9,6 @@ namespace ClinicalManagement.Domain.Entities
 {
    public  class UsersModel: IdentityUser
     {
-        public new string UserName { get; set; }
         public string? Gender { get; set; }
         public string NationalId { get; set; }
         public string? Address { get; set; }

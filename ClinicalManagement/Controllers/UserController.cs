@@ -1,5 +1,6 @@
 ﻿using ClinicalManagement.Application.Dtos.UserDtos.Commands;
 using ClinicalManagement.Application.User.Commands;
+using ClinicalManagement.Application.User.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -33,6 +34,12 @@ namespace ClinicalManagement.Controllers
         public async Task<IActionResult> CreateDoctor([FromBody] CreateDoctor doctor)
         {
             var res = await mediator.Send(new CreateDoctorCommand { CreateDoctor = doctor });
+            return Ok(res);
+        }
+        [HttpGet("doctors")]
+        public async Task<IActionResult> AllDoctors()
+        {
+            var res = await mediator.Send(new AllDoctorsQuery ());
             return Ok(res);
         }
     }

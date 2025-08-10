@@ -7,11 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClinicalManagement.Application.User.Commands
+namespace ClinicalManagement.Application.User.CreateDoctor
 {
-    public class CreateUserCommand:IRequest<Result<string>>
+    public class CreateDoctorCommand :IRequest<Result<string>>
     {
-        public CreatePatient userDto { get; set; }
-
+        public CreateDoctor CreateDoctor { get; set; }
     }
 }

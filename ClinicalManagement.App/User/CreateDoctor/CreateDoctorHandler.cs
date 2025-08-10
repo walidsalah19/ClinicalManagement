@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using ClinicalManagement.Application.Abstractions.Services;
 using ClinicalManagement.Application.Common.Result;
-using ClinicalManagement.Application.User.Commands;
 using ClinicalManagement.Domain.Models;
 using MediatR;
 using System;
@@ -10,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClinicalManagement.Application.User.Handlers
+namespace ClinicalManagement.Application.User.CreateDoctor
 {
     public class CreateDoctorHandler : IRequestHandler<CreateDoctorCommand, Result<string>>
     {
