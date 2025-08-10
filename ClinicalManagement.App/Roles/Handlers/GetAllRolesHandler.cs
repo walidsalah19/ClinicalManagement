@@ -2,7 +2,6 @@
 using ClinicalManagement.Application.Common.Result;
 using ClinicalManagement.Application.Dtos;
 using ClinicalManagement.Application.Roles.Quires;
-using ClinicalManagement.Application.User.Commands;
 using MediatR;
 using System;
 using System.Collections.Generic;

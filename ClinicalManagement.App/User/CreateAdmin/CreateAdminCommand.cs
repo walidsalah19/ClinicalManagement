@@ -11,6 +11,6 @@ namespace ClinicalManagement.Application.User.CreateAdmin
 {
    public  class CreateAdminCommand :IRequest<Result<string>>
     {
-       public  CreateAdmin adminDto { get; set; }
+       public  CreateAdminDto adminDto { get; set; }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
+using ClinicalManagement.Application.Dtos.UserDtos;
 using ClinicalManagement.Application.Dtos.UserDtos.Commands;
 using ClinicalManagement.Application.Dtos.UserDtos.Queries;
-using ClinicalManagement.Application.User.Commands;
 using ClinicalManagement.Domain.Entities;
 using ClinicalManagement.Domain.Models;
 using System;
@@ -18,7 +18,7 @@ namespace ClinicalManagement.Application.Common.Mapping
         {
             CreateMap<Doctor, DoctorDto>();
 
-            CreateMap<CreatePatient, Patient>()
+            CreateMap<CreatePatientDto, Patient>()
                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.UserName))
                .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Address))
                .ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(src => src.PhoneNumber))
@@ -28,13 +28,13 @@ namespace ClinicalManagement.Application.Common.Mapping
                .ForMember(dest => dest.NationalId, opt => opt.MapFrom(src => src.NationalId));
 
 
-            CreateMap<CreateAdmin, Admin>()
+            CreateMap<CreateAdminDto, Admin>()
               .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.UserName))
               .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
               .ForMember(dest => dest.NationalId, opt => opt.MapFrom(src => src.NationalId));
 
-
-            CreateMap<CreateDoctor, Doctor>()
+            CreateMap<UsersModel, UserDto>();
+            CreateMap<CreateDoctorDto, Doctor>();
                /*.ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.UserName))
                .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Address))
                .ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(src => src.PhoneNumber))
@@ -44,7 +44,7 @@ namespace ClinicalManagement.Application.Common.Mapping
                .ForMember(dest => dest.Biography, opt => opt.MapFrom(src => src.Biography))
                .ForMember(dest => dest.Specialization, opt => opt.MapFrom(src => src.Specialization))
                .ForMember(dest => dest.Specialization, opt => opt.MapFrom(src => src.Specialization))
-               .ForMember(dest => dest.NationalId, opt => opt.MapFrom(src => src.NationalId))*/;
+               .ForMember(dest => dest.NationalId, opt => opt.MapFrom(src => src.NationalId))*/
 
         }
     }
