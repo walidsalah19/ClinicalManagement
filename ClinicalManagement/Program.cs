@@ -29,6 +29,7 @@ namespace ClinicalManagement
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddInfrastructure(builder.Configuration);
+            builder.Services.AddFluentEmail(builder.Configuration);
             builder.Services.AddApplicationServices();
 
             builder.Services.AddApiServices();
