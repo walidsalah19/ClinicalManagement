@@ -1,10 +1,12 @@
-﻿using ClinicalManagement.Application.Common.Result;
+﻿using ClinicalManagement.Application.Abstractions.Services;
+using ClinicalManagement.Application.Common.Result;
 using ClinicalManagement.Application.Dtos.UserDtos.Commands;
 using ClinicalManagement.Application.User.AllDoctors;
 using ClinicalManagement.Application.User.AllPatients;
 using ClinicalManagement.Application.User.CreateAdmin;
 using ClinicalManagement.Application.User.CreateDoctor;
 using ClinicalManagement.Application.User.CreatePatient;
+using ClinicalManagement.Domain.EmailModel;
 using ClinicalManagement.Domain.Enums;
 using ClinicalManagement.Extentions;
 using MediatR;
@@ -17,11 +19,14 @@ namespace ClinicalManagement.Controllers
     public class UserController : ControllerBase
     {
         private readonly IMediator mediator;
+        ISendEmail sendEmail;
 
-        public UserController(IMediator mediator)
+        public UserController(IMediator mediator, ISendEmail sendEmail)
         {
             this.mediator = mediator;
+            this.sendEmail = sendEmail;
         }
+
         [HttpPost("admin")]
         public async Task<IActionResult> CreateAdmin([FromBody] CreateAdminDto admin)
         {
@@ -53,6 +58,12 @@ namespace ClinicalManagement.Controllers
             var res = await mediator.Send(new AllPatientQuery());
             return this.HandleResult(res);
         }
+        [HttpGet("SendEmail")]
+        public async Task<IActionResult> SendEmail()
+        {
+           await  sendEmail.Send(new EmailMetaData(toAddress: "walidsalah9585@gmail.com", subject:"Flount email testing",body:"this is email testing"));
+            return Ok();
+        }
 
 
 
@@ -62,7 +73,7 @@ namespace ClinicalManagement.Controllers
 
 
 
-        
+
 
     }
 }
