@@ -18,6 +18,10 @@ namespace ClinicalManagement.Application.Common.Mapping
         {
             CreateMap<Doctor, DoctorDto>();
 
+            CreateMap<Patient, PatientDto>();
+            CreateMap<Admin, AdminDto>();
+
+
             CreateMap<CreatePatientDto, Patient>()
                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.UserName))
                .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Address))
@@ -33,7 +37,6 @@ namespace ClinicalManagement.Application.Common.Mapping
               .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
               .ForMember(dest => dest.NationalId, opt => opt.MapFrom(src => src.NationalId));
 
-            CreateMap<UsersModel, UserDto>();
             CreateMap<CreateDoctorDto, Doctor>();
                /*.ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.UserName))
                .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Address))

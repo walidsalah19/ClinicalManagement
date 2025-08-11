@@ -57,14 +57,24 @@ namespace ClinicalManagement.Infrastructure.Services
         }
         public async Task<Result<string>> DeleteAsync(string userId)
         {
-            var user = await _userManager.FindByIdAsync(userId);
-            if (user == null)
-                return Result<string>.Failure(new Error(message: "User not found",code:ErrorCodes.NotFound.ToString()));
+                var user = await _userManager.FindByIdAsync(userId);
+                if (user == null)
+                    return Result<string>.Failure(new Error(message: "User not found", code: ErrorCodes.NotFound.ToString()));
 
-            var result = await _userManager.DeleteAsync(user);
-            return result.Succeeded
-                ? Result<string>.Success("User deleted successfully")
-                : Result<string>.Failure(result.Errors.Select(e => e.Description).ToList());
+                try
+                {
+                    await _mediator.Publish(new SendEmailEvent(new EmailMetaData(toAddress: user.Email, subject: "Delete Account", body: $"thanks for using our app {user.UserName}")));
+
+                var result = await _userManager.DeleteAsync(user);
+
+                return result.Succeeded
+                    ? Result<string>.Success("User deleted successfully")
+                    : Result<string>.Failure(result.Errors.Select(e => e.Description).ToList());
+                }
+                catch (Exception r)
+                    {
+                    throw r;
+                    }
         }
 
         public async Task<IEnumerable<UsersModel>> GetAllAsync(string role)
