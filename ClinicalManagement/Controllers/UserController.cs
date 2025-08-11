@@ -19,12 +19,10 @@ namespace ClinicalManagement.Controllers
     public class UserController : ControllerBase
     {
         private readonly IMediator mediator;
-        ISendEmail sendEmail;
 
-        public UserController(IMediator mediator, ISendEmail sendEmail)
+        public UserController(IMediator mediator)
         {
             this.mediator = mediator;
-            this.sendEmail = sendEmail;
         }
 
         [HttpPost("admin")]
@@ -58,12 +56,7 @@ namespace ClinicalManagement.Controllers
             var res = await mediator.Send(new AllPatientQuery());
             return this.HandleResult(res);
         }
-        [HttpGet("SendEmail")]
-        public async Task<IActionResult> SendEmail()
-        {
-           await  sendEmail.Send(new EmailMetaData(toAddress: "walidsalah9585@gmail.com", subject:"Flount email testing",body:"this is email testing"));
-            return Ok();
-        }
+        
 
 
 

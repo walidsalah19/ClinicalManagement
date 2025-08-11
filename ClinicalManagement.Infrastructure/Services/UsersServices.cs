@@ -1,11 +1,15 @@
 ﻿using Azure.Core;
 using ClinicalManagement.Application.Abstractions.Services;
 using ClinicalManagement.Application.Common.Result;
+using ClinicalManagement.Application.Events;
+using ClinicalManagement.Application.Events.SendEmail;
+using ClinicalManagement.Domain.EmailModel;
 using ClinicalManagement.Domain.Entities;
 using ClinicalManagement.Domain.Enums;
 using ClinicalManagement.Domain.Models;
 using ClinicalManagement.Infrastructure.Data;
 using ClinicalManagement.Infrastructure.Migrations;
+using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System;
@@ -21,12 +25,15 @@ namespace ClinicalManagement.Infrastructure.Services
     {
         private readonly UserManager<UsersModel> _userManager;
         private readonly AppDbContext appDbContext;
+        private readonly IMediator _mediator;
 
-        public UsersServices(UserManager<UsersModel> userManager, AppDbContext appDbContext)
+        public UsersServices(UserManager<UsersModel> userManager, AppDbContext appDbContext, IMediator mediator)
         {
-            this._userManager = userManager;
+            _userManager = userManager;
             this.appDbContext = appDbContext;
+            _mediator = mediator;
         }
+
         public async Task<Result<string>> CreateAsync(UsersModel user, string role, string password)
         {
             using (var transaction = await appDbContext.Database.BeginTransactionAsync())
@@ -43,7 +50,7 @@ namespace ClinicalManagement.Infrastructure.Services
                     await transaction.RollbackAsync();
                     return Result<string>.Failure(roleResult.Errors.Select(e => e.Description).ToList());
                 }
-
+                await _mediator.Publish(new SendEmailEvent(new EmailMetaData(toAddress: user.Email, subject: "Creating Account", body: $"Welcome in our app {user.UserName}")));
                 await transaction.CommitAsync();
                 return Result<string>.Success("User created successfully");
             }
