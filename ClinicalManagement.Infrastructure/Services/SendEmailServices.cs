@@ -1,5 +1,6 @@
 ﻿using ClinicalManagement.Application.Abstractions.Services;
 using ClinicalManagement.Domain.EmailModel;
+using ClinicalManagement.Domain.Models;
 using FluentEmail.Core;
 using System;
 using System.Collections.Generic;
