@@ -1,11 +1,13 @@
 ﻿using ClinicalManagement.Application.Abstractions.Services;
 using ClinicalManagement.Application.Common.Result;
 using ClinicalManagement.Application.Dtos.UserDtos.Commands;
+using ClinicalManagement.Application.User.AllAdmins;
 using ClinicalManagement.Application.User.AllDoctors;
 using ClinicalManagement.Application.User.AllPatients;
 using ClinicalManagement.Application.User.CreateAdmin;
 using ClinicalManagement.Application.User.CreateDoctor;
 using ClinicalManagement.Application.User.CreatePatient;
+using ClinicalManagement.Application.User.DeleteUser;
 using ClinicalManagement.Domain.EmailModel;
 using ClinicalManagement.Domain.Enums;
 using ClinicalManagement.Extentions;
@@ -29,6 +31,12 @@ namespace ClinicalManagement.Controllers
         public async Task<IActionResult> CreateAdmin([FromBody] CreateAdminDto admin)
         {
             var res = await mediator.Send(new CreateAdminCommand { adminDto = admin });
+            return this.HandleResult(res);
+        }
+        [HttpGet("admins")]
+        public async Task<IActionResult> AllAdmins() 
+        {
+            var res = await mediator.Send(new AllAdminsQuery());
             return this.HandleResult(res);
         }
         [HttpPost("doctor")]
@@ -56,9 +64,14 @@ namespace ClinicalManagement.Controllers
             var res = await mediator.Send(new AllPatientQuery());
             return this.HandleResult(res);
         }
-        
 
 
+        [HttpDelete]
+        public async Task<IActionResult> DeleteUser([FromQuery] string userId)
+        {
+            var res = await mediator.Send(new DeleteUserCommand { Id = userId });
+            return this.HandleResult(res);
+        }
 
 
 
