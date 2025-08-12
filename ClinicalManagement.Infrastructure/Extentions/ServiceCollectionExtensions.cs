@@ -21,6 +21,10 @@ using ClinicalManagement.Infrastructure.Services;
 using ClinicalManagement.Domain.Interfaces;
 using ClinicalManagement.Infrastructure.Reposatories;
 using ClinicalManagement.Domain.Models;
+using ClinicalManagement.Infrastructure.Services.IdentityServices;
+using ClinicalManagement.Application.Abstractions.Services.IdentityServices;
+using ClinicalManagement.Application.Abstractions.Services.AuthServices;
+using ClinicalManagement.Infrastructure.Services.AuthServices;
 
 namespace ClinicalManagement.Infrastructure.Extentions
 {
@@ -53,6 +57,8 @@ namespace ClinicalManagement.Infrastructure.Extentions
             services.AddScoped<ISendEmail, SendEmailServices>();
 
             services.AddScoped<IUsersServices, UsersServices>();
+            services.AddScoped<IAuthServices, AuthServices>();
+            services.AddScoped<ITokenService, TokenService>();
             services.AddScoped(typeof(IBaseReposatory<>), typeof(BaseReposatory<>));
 
             // services.AddScoped<IUsersServices<UsersModel>, UsersServices<UsersModel>();

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClinicalManagement.Application.Abstractions.Services
+namespace ClinicalManagement.Application.Abstractions.Services.IdentityServices
 {
     public interface IRoleServices
     {

@@ -9,7 +9,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClinicalManagement.Application.Abstractions.Services
+namespace ClinicalManagement.Application.Abstractions.Services.IdentityServices
 {
     public interface IUsersServices
     {

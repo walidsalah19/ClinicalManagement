@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClinicalManagement.Application.Mapping
+namespace ClinicalManagement.Application.Common.Mapping
 {
     public class MappingProfile : Profile
     {

@@ -1,8 +1,8 @@
 ﻿using Azure.Core;
-using ClinicalManagement.Application.Abstractions.Services;
+using ClinicalManagement.Application.Abstractions.Services.IdentityServices;
 using ClinicalManagement.Application.Common.Result;
-using ClinicalManagement.Application.Events;
-using ClinicalManagement.Application.Events.SendEmail;
+using ClinicalManagement.Application.Common.Events;
+using ClinicalManagement.Application.Common.Events.SendEmail;
 using ClinicalManagement.Domain.EmailModel;
 using ClinicalManagement.Domain.Entities;
 using ClinicalManagement.Domain.Enums;
@@ -19,7 +19,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClinicalManagement.Infrastructure.Services
+namespace ClinicalManagement.Infrastructure.Services.IdentityServices
 {
     public class UsersServices : IUsersServices
     {
@@ -58,6 +58,7 @@ namespace ClinicalManagement.Infrastructure.Services
         public async Task<Result<string>> DeleteAsync(string userId)
         {
                 var user = await _userManager.FindByIdAsync(userId);
+            
                 if (user == null)
                     return Result<string>.Failure(new Error(message: "User not found", code: ErrorCodes.NotFound.ToString()));
 
