@@ -4,17 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClinicalManagement.Application.Dtos.UserDtos
+namespace ClinicalManagement.Application.Dtos.UserDtos.Commands
 {
-    public class UserDto
+    class UpdateAdminDto
     {
+        private string AdminId { get; set; }
         public string UserName { get; set; }
         public string Email { get; set; }
-        public string PhoneNumber { get; set; }
-        public string Gender { get; set; }
+       
         public string NationalId { get; set; }
-        public string Address { get; set; }
-        public DateTime BirthDate { get; set; }
 
     }
 }

@@ -27,15 +27,15 @@ namespace ClinicalManagement
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+          //  builder.Services.AddSwaggerGen();
             builder.Services.AddInfrastructure(builder.Configuration);
             builder.Services.AddFluentEmail(builder.Configuration);
             builder.Services.AddApplicationServices();
 
             builder.Services.AddApiServices();
             builder.Host.UseSerilog();
-            /*builder.Services.AddSwaggerServices();
-            builder.Services.AddAuthServices();*/
+            builder.Services.AddSwaggerServices();
+            builder.Services.AddAuthServices(builder.Configuration);
             var app = builder.Build();
             
             // Configure the HTTP request pipeline.
