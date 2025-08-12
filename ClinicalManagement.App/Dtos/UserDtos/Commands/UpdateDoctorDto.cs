@@ -6,12 +6,9 @@ using System.Threading.Tasks;
 
 namespace ClinicalManagement.Application.Dtos.UserDtos.Commands
 {
-   public   class CreateDoctorDto :UserDto
+    class UpdateDoctorDto: UserDto
     {
-
-        public string Password { get; set; }
-        public string Role { get; set; }
-
+        public string Id { get; set; }
         public string Specialization { get; set; }
         public string Qualification { get; set; }
         public string? Biography { get; set; }
