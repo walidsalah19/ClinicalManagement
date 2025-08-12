@@ -8,6 +8,8 @@ using ClinicalManagement.Application.User.CreateAdmin;
 using ClinicalManagement.Application.User.CreateDoctor;
 using ClinicalManagement.Application.User.CreatePatient;
 using ClinicalManagement.Application.User.DeleteUser;
+using ClinicalManagement.Application.User.GetUserById;
+using ClinicalManagement.Application.User.UpdatePatient;
 using ClinicalManagement.Domain.EmailModel;
 using ClinicalManagement.Domain.Enums;
 using ClinicalManagement.Extentions;
@@ -33,6 +35,12 @@ namespace ClinicalManagement.Controllers
             var res = await mediator.Send(new CreateAdminCommand { adminDto = admin });
             return this.HandleResult(res);
         }
+        [HttpPut("admin")]
+        public async Task<IActionResult> UpdateAdmin([FromBody] UpdateAdminDto admin)
+        {
+            var res = await mediator.Send(new UpdateAdminCommand { dto = admin });
+            return this.HandleResult(res);
+        }
         [HttpGet("admins")]
         public async Task<IActionResult> AllAdmins() 
         {
@@ -43,6 +51,12 @@ namespace ClinicalManagement.Controllers
         public async Task<IActionResult> CreateDoctor([FromBody] CreateDoctorDto doctor)
         {
             var res = await mediator.Send(new CreateDoctorCommand { CreateDoctor = doctor });
+            return this.HandleResult(res);
+        }
+        [HttpPut("doctor")]
+        public async Task<IActionResult> UpdateDoctor([FromBody] UpdateDoctorDto doctor)
+        {
+            var res = await mediator.Send(new UpdateDoctorCommand { dto = doctor });
             return this.HandleResult(res);
         }
         [HttpGet("doctors")]
@@ -58,13 +72,24 @@ namespace ClinicalManagement.Controllers
            var res=await mediator.Send(new CreateUserCommand { userDto=user});
             return this.HandleResult(res);
         }
+        [HttpPut("patient")]
+        public async Task<IActionResult> UpdatePatient([FromBody] UpdatePatientDto user)
+        {
+            var res = await mediator.Send(new UpdatePatientCommand { patientDto = user });
+            return this.HandleResult(res);
+        }
         [HttpGet("patients")]
         public async Task<IActionResult> AllPatients()
         {
             var res = await mediator.Send(new AllPatientQuery());
             return this.HandleResult(res);
         }
-
+        [HttpGet()]
+        public async Task<IActionResult> GetUserById(string UserId)
+        {
+            var res = await mediator.Send(new GetUserByIdQuery { Id=UserId});
+            return this.HandleResult(res);
+        }
 
         [HttpDelete]
         public async Task<IActionResult> DeleteUser([FromQuery] string userId)

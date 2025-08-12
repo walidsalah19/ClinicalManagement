@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ClinicalManagement.Application.Dtos.UserDtos.Commands
 {
-    class UpdateDoctorDto: UserDto
+   public class UpdateDoctorDto: UserDto
     {
         public string Id { get; set; }
         public string Specialization { get; set; }

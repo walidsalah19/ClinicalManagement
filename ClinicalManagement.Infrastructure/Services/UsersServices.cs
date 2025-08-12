@@ -83,6 +83,12 @@ namespace ClinicalManagement.Infrastructure.Services
             return users;
         }
 
+        public async Task<UsersModel> GetUserById(string Id)
+        {
+            var user = await _userManager.FindByIdAsync(Id);
+            return user;
+        }
+
         public async Task<Result<string>> UpdateAsync(UsersModel user)
         {
             var result = await _userManager.UpdateAsync(user);
@@ -90,5 +96,6 @@ namespace ClinicalManagement.Infrastructure.Services
                 ? Result<string>.Success("User updated successfully")
                 : Result<string>.Failure(result.Errors.Select(e => e.Description).ToList());
         }
+
     }
 }
