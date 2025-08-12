@@ -1,4 +1,4 @@
-﻿using ClinicalManagement.Application.Abstractions.Services;
+﻿using ClinicalManagement.Application.Abstractions.Services.IdentityServices;
 using ClinicalManagement.Application.Common.Result;
 using ClinicalManagement.Application.Dtos;
 using ClinicalManagement.Application.Roles.Quires;

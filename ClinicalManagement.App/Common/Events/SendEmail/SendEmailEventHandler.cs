@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClinicalManagement.Application.Events.SendEmail
+namespace ClinicalManagement.Application.Common.Events.SendEmail
 {
     class SendEmailEventHandler : INotificationHandler<SendEmailEvent>
     {

@@ -1,4 +1,4 @@
-﻿using ClinicalManagement.Application.Abstractions.Services;
+﻿using ClinicalManagement.Application.Abstractions.Services.IdentityServices;
 using ClinicalManagement.Application.Common.Result;
 using ClinicalManagement.Application.Dtos;
 using ClinicalManagement.Domain.Enums;
@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClinicalManagement.Infrastructure.Services
+namespace ClinicalManagement.Infrastructure.Services.IdentityServices
 {
     public class RoleServices : IRoleServices
     {
@@ -65,7 +65,7 @@ namespace ClinicalManagement.Infrastructure.Services
                    message: "This role isn't  Exixt",
                    code: ErrorCodes.AlreadyExists.ToString()));
             }
-            return Result<String>.Success(role.Name);
+            return Result<string>.Success(role.Name);
         }
 
         public async Task<bool> RoleExistsAsync(string roleName)
