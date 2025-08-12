@@ -10,16 +10,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClinicalManagement.Application.Common.Mapping
+namespace ClinicalManagement.Application.Mapping
 {
     public class MappingProfile : Profile
     {
         public MappingProfile()
         {
             CreateMap<Doctor, DoctorDto>();
+            CreateMap<UpdateDoctorDto, Doctor>();
 
             CreateMap<Patient, PatientDto>();
+            CreateMap<UpdatePatientDto, Patient>();
+
             CreateMap<Admin, AdminDto>();
+            CreateMap<UpdateAdminDto, Admin>();
 
 
             CreateMap<CreatePatientDto, Patient>()

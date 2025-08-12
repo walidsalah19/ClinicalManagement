@@ -17,5 +17,7 @@ namespace ClinicalManagement.Application.Abstractions.Services
         Task<Result<string>> CreateAsync(UsersModel user, string role, string password);
         Task<Result<string>> DeleteAsync(string userId);
         Task<Result<string>> UpdateAsync(UsersModel user);
+
+        Task<UsersModel> GetUserById(string Id);
     }
 }

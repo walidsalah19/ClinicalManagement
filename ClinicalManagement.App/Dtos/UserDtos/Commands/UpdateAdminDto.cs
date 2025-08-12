@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace ClinicalManagement.Application.Dtos.UserDtos.Commands
 {
-    class UpdateAdminDto
+  public  class UpdateAdminDto
     {
-        private string AdminId { get; set; }
+        public string Id { get; set; }
         public string UserName { get; set; }
         public string Email { get; set; }
        
