@@ -23,15 +23,13 @@ namespace ClinicalManagement.Infrastructure.Services.AuthServices
         private readonly UserManager<UserModel> userManager;
         private readonly ITokenService tokenService;
         private readonly SignInManager<UserModel> signInManager;
-        private readonly IUnitOfWork unitOfWork;
         private readonly AppDbContext appContext;
 
-        public AuthServices(UserManager<UserModel> userManager, ITokenService tokenService, SignInManager<UserModel> signInManager, IUnitOfWork unitOfWork, AppDbContext appContext)
+        public AuthServices(UserManager<UserModel> userManager, ITokenService tokenService, SignInManager<UserModel> signInManager,  AppDbContext appContext)
         {
             this.userManager = userManager;
             this.tokenService = tokenService;
             this.signInManager = signInManager;
-            this.unitOfWork = unitOfWork;
             this.appContext = appContext;
         }
 
@@ -58,9 +56,12 @@ namespace ClinicalManagement.Infrastructure.Services.AuthServices
             return Result<AuthResponse>.Success(tokens);
         }
 
-        public Task<Result<string>> LogoutAsync(string userId)
+        public async Task<Result<string>> LogoutAsync(string userId)
         {
-            throw new NotImplementedException();
+            await signInManager.SignOutAsync();
+           var res= await appContext.RefreshTokens.Where(x => x.UserId == userId)
+                .ExecuteDeleteAsync();
+            return Result<string>.Success("Logout Successfully");
         }
 
         public async Task<Result<AuthResponse>> RefreshTokenAsync(string refreshToken)
@@ -88,8 +89,8 @@ namespace ClinicalManagement.Infrastructure.Services.AuthServices
                 ExpireOnUtc = DateTime.UtcNow.AddDays(7)
             };
 
-            await unitOfWork.Repository<RefreshToken>().AddAsync(refrashToken);
-            unitOfWork.Complete();
+            await appContext.RefreshTokens.AddAsync(refrashToken);
+            appContext.SaveChanges();
 
             return refrashToken.Token;
         }
