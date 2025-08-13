@@ -1,6 +1,9 @@
-﻿using ClinicalManagement.Application.Abstractions.Services.AuthServices;
+﻿using Azure.Core;
+using ClinicalManagement.Application.Abstractions.Services.AuthServices;
 using ClinicalManagement.Application.Dtos.AuthDtos;
 using ClinicalManagement.Domain.Entities;
+using ClinicalManagement.Domain.Interfaces;
+using ClinicalManagement.Domain.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -9,6 +12,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -23,7 +27,7 @@ namespace ClinicalManagement.Infrastructure.Services.AuthServices
             this.configuration = configuration;
         }
 
-        public AuthResponse GenerateTokens(UsersModel user,List<string> roles)
+        public AuthResponse GenerateTokens(UserModel user,List<string> roles)
         {
             List<Claim> userClaims = new List<Claim>();
             userClaims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
@@ -47,19 +51,24 @@ namespace ClinicalManagement.Infrastructure.Services.AuthServices
                     claims: userClaims,
                     signingCredentials: signing
                 );
+            var accessToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurity);
 
+           
             return new AuthResponse
             {
-                RefreshToken = "Login succesffully",
-                AccessToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurity),
+                RefreshToken ="",
+                AccessToken = accessToken,
                 ExpiresAt = DateTime.Now.AddDays(1)
 
             };
         }
-
-        public Task<TokenResponse?> RefreshTokenAsync(string refreshToken)
+        public string GenerateRefreshToken()
         {
-            throw new NotImplementedException();
+            var randomNumber = new byte[32];
+            using var rng = RandomNumberGenerator.Create();
+            rng.GetBytes(randomNumber);
+            return Convert.ToBase64String(randomNumber);
         }
+       
     }
 }

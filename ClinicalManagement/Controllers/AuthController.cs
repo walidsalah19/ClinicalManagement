@@ -1,5 +1,7 @@
 ﻿using ClinicalManagement.Application.Auth.Login;
+using ClinicalManagement.Application.Auth.RefreshToken;
 using ClinicalManagement.Extentions;
+using ClinicalManagement.Infrastructure.Migrations;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -20,6 +22,12 @@ namespace ClinicalManagement.Controllers
         public async Task<IActionResult> Login(string nameOrEmail,string password)
         {
             var res =await mediator.Send(new LoginCommand { Password = password, UserName = nameOrEmail });
+            return this.HandleResult(res);
+        }
+        [HttpGet("RefreshToken")]
+        public async Task<IActionResult> RefreshToken(string refreshToken)
+        {
+            var res = await mediator.Send(new RefreshTokenCommand { RefreshToken=refreshToken});
             return this.HandleResult(res);
         }
     }

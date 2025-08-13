@@ -13,11 +13,11 @@ namespace ClinicalManagement.Application.Abstractions.Services.IdentityServices
 {
     public interface IUsersServices
     {
-        Task<IEnumerable<UsersModel>> GetAllAsync(string role);
-        Task<Result<string>> CreateAsync(UsersModel user, string role, string password);
+        Task<IEnumerable<UserModel>> GetAllAsync(string role);
+        Task<Result<string>> CreateAsync(UserModel user, string role, string password);
         Task<Result<string>> DeleteAsync(string userId);
-        Task<Result<string>> UpdateAsync(UsersModel user);
+        Task<Result<string>> UpdateAsync(UserModel user);
 
-        Task<UsersModel> GetUserById(string Id);
+        Task<UserModel> GetUserById(string Id);
     }
 }

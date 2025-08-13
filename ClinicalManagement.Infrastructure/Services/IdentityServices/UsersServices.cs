@@ -23,18 +23,18 @@ namespace ClinicalManagement.Infrastructure.Services.IdentityServices
 {
     public class UsersServices : IUsersServices
     {
-        private readonly UserManager<UsersModel> _userManager;
+        private readonly UserManager<UserModel> _userManager;
         private readonly AppDbContext appDbContext;
         private readonly IMediator _mediator;
 
-        public UsersServices(UserManager<UsersModel> userManager, AppDbContext appDbContext, IMediator mediator)
+        public UsersServices(UserManager<UserModel> userManager, AppDbContext appDbContext, IMediator mediator)
         {
             _userManager = userManager;
             this.appDbContext = appDbContext;
             _mediator = mediator;
         }
 
-        public async Task<Result<string>> CreateAsync(UsersModel user, string role, string password)
+        public async Task<Result<string>> CreateAsync(UserModel user, string role, string password)
         {
             using (var transaction = await appDbContext.Database.BeginTransactionAsync())
             {
@@ -78,19 +78,19 @@ namespace ClinicalManagement.Infrastructure.Services.IdentityServices
                     }
         }
 
-        public async Task<IEnumerable<UsersModel>> GetAllAsync(string role)
+        public async Task<IEnumerable<UserModel>> GetAllAsync(string role)
         {
             var users =await _userManager.GetUsersInRoleAsync(role);
             return users;
         }
 
-        public async Task<UsersModel> GetUserById(string Id)
+        public async Task<UserModel> GetUserById(string Id)
         {
             var user = await _userManager.FindByIdAsync(Id);
             return user;
         }
 
-        public async Task<Result<string>> UpdateAsync(UsersModel user)
+        public async Task<Result<string>> UpdateAsync(UserModel user)
         {
             var result = await _userManager.UpdateAsync(user);
             return result.Succeeded

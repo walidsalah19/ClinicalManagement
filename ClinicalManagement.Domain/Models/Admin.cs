@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ClinicalManagement.Domain.Models
 {
-    public class Admin : UsersModel
+    public class Admin : UserModel
     {
     }
 }

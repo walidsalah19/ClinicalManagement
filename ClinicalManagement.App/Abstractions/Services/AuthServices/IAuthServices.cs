@@ -13,6 +13,6 @@ namespace ClinicalManagement.Application.Abstractions.Services.AuthServices
         Task<Result<AuthResponse>> LoginAsync(string usernameOrEmail, string password);
         Task<Result<string>> LogoutAsync(string userId);
         Task<Result<string>> ChangePasswordAsync(string userId, string currentPassword, string newPassword);
-        Task<Result<TokenResponse>> RefreshTokenAsync(string refreshToken);
+        Task<Result<AuthResponse>> RefreshTokenAsync(string refreshToken);
     }
 }
