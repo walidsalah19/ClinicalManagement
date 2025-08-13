@@ -7,14 +7,16 @@ using System.Threading.Tasks;
 
 namespace ClinicalManagement.Domain.Models
 {
-   public class Notification
+   public class RefreshToken
     {
         public Guid Id { get; set; }
-        public string Message { get; set; }
-        public DateTime SentAt { get; set; }
-        public bool IsRead { get; set; }
+
+        public string Token { get; set; }
 
         public string UserId { get; set; }
-        public UserModel User { get; set; }
+
+        public DateTime ExpireOnUtc { get; set; }
+
+        public UserModel user { get; set; }
     }
 }

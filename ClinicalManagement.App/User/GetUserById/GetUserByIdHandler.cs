@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ClinicalManagement.Application.User.GetUserById
 {
-    public class GetUserByIdHandler : IRequestHandler<GetUserByIdQuery, Result<UsersModel>>
+    public class GetUserByIdHandler : IRequestHandler<GetUserByIdQuery, Result<UserModel>>
     {
         private readonly IUsersServices usersServices;
 
@@ -20,13 +20,13 @@ namespace ClinicalManagement.Application.User.GetUserById
             this.usersServices = usersServices;
         }
 
-        public  async Task<Result<UsersModel>> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
+        public  async Task<Result<UserModel>> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
         {
             var res = await usersServices.GetUserById(request.Id);
             if (res == null)
-                return Result<UsersModel>.Failure(new Error(message: "User not found", code: ErrorCodes.NotFound.ToString()));
+                return Result<UserModel>.Failure(new Error(message: "User not found", code: ErrorCodes.NotFound.ToString()));
       
-            return  Result<UsersModel>.Success(res);
+            return  Result<UserModel>.Success(res);
         }
     }
 }

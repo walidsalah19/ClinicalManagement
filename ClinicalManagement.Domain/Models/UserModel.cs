@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ClinicalManagement.Domain.Entities
 {
-   public  class UsersModel: IdentityUser
+   public  class UserModel: IdentityUser
     {
         public string? Gender { get; set; }
         public string NationalId { get; set; }

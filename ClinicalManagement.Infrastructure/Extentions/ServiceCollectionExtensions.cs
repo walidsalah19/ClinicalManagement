@@ -25,6 +25,7 @@ using ClinicalManagement.Infrastructure.Services.IdentityServices;
 using ClinicalManagement.Application.Abstractions.Services.IdentityServices;
 using ClinicalManagement.Application.Abstractions.Services.AuthServices;
 using ClinicalManagement.Infrastructure.Services.AuthServices;
+using ClinicalManagement.Infrastructure.UnitOFWork;
 
 namespace ClinicalManagement.Infrastructure.Extentions
 {
@@ -37,7 +38,7 @@ namespace ClinicalManagement.Infrastructure.Extentions
                 options.UseSqlServer(config.GetConnectionString("DefaultConnection"))
                    .LogTo(Console.WriteLine, LogLevel.Information);
             });
-            services.AddIdentity<UsersModel, IdentityRole>()
+            services.AddIdentity<UserModel, IdentityRole>()
              .AddEntityFrameworkStores<AppDbContext>();
             services.AddStackExchangeRedisCache(options =>
             {
@@ -60,6 +61,7 @@ namespace ClinicalManagement.Infrastructure.Extentions
             services.AddScoped<IAuthServices, AuthServices>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped(typeof(IBaseReposatory<>), typeof(BaseReposatory<>));
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             // services.AddScoped<IUsersServices<UsersModel>, UsersServices<UsersModel>();
 

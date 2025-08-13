@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ClinicalManagement.Application.User.GetUserById
 {
-    public class GetUserByIdQuery : IRequest<Result<UsersModel>>
+    public class GetUserByIdQuery : IRequest<Result<UserModel>>
     {
         public string Id { get; set; }
     }

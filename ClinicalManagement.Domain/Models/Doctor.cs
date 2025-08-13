@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ClinicalManagement.Domain.Models
 {
-   public class Doctor : UsersModel
+   public class Doctor : UserModel
     {
         public string Specialization { get; set; }
         public string Qualification { get; set; }

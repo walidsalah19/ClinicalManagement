@@ -10,7 +10,7 @@ namespace ClinicalManagement.Application.Abstractions.Services.AuthServices
 {
     public interface ITokenService
     {
-        AuthResponse GenerateTokens(UsersModel user, List<string> roles);
-        Task<TokenResponse?> RefreshTokenAsync(string refreshToken);
+        AuthResponse GenerateTokens(UserModel user, List<string> roles);
+        public string GenerateRefreshToken();
     }
 }
