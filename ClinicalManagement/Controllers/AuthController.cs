@@ -1,4 +1,5 @@
 ﻿using ClinicalManagement.Application.Auth.Login;
+using ClinicalManagement.Application.Auth.Logout;
 using ClinicalManagement.Application.Auth.RefreshToken;
 using ClinicalManagement.Extentions;
 using ClinicalManagement.Infrastructure.Migrations;
@@ -18,16 +19,22 @@ namespace ClinicalManagement.Controllers
         {
             this.mediator = mediator;
         }
-        [HttpGet("login")]
+        [HttpPost("login")]
         public async Task<IActionResult> Login(string nameOrEmail,string password)
         {
             var res =await mediator.Send(new LoginCommand { Password = password, UserName = nameOrEmail });
             return this.HandleResult(res);
         }
-        [HttpGet("RefreshToken")]
+        [HttpPost("RefreshToken")]
         public async Task<IActionResult> RefreshToken(string refreshToken)
         {
             var res = await mediator.Send(new RefreshTokenCommand { RefreshToken=refreshToken});
+            return this.HandleResult(res);
+        }
+        [HttpPost("Logout")]
+        public async Task<IActionResult> Logout(string userId)
+        {
+            var res = await mediator.Send(new LogoutCommand { userId = userId });
             return this.HandleResult(res);
         }
     }
