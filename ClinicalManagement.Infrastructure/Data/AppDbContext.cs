@@ -20,6 +20,8 @@ namespace ClinicalManagement.Infrastructure.Data
         public DbSet<Admin> Admins { get; set; }
         public DbSet<RefreshToken>RefreshTokens { get; set; }
 
+        public DbSet<Notification> Notifications { get; set; }
+
         public AppDbContext(DbContextOptions options) : base(options)
         {
         }

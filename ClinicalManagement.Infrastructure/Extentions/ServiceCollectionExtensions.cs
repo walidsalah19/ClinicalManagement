@@ -11,13 +11,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
-using ClinicalManagement.Infrastructure.Jop;
 using MediatR;
 using Hangfire;
 using FluentValidation;
 using ClinicalManagement.Application.Abstractions.Jop;
 using ClinicalManagement.Application.Abstractions.Services;
-using ClinicalManagement.Infrastructure.Services;
 using ClinicalManagement.Domain.Interfaces;
 using ClinicalManagement.Infrastructure.Reposatories;
 using ClinicalManagement.Domain.Models;
@@ -26,6 +24,8 @@ using ClinicalManagement.Application.Abstractions.Services.IdentityServices;
 using ClinicalManagement.Application.Abstractions.Services.AuthServices;
 using ClinicalManagement.Infrastructure.Services.AuthServices;
 using ClinicalManagement.Infrastructure.UnitOFWork;
+using ClinicalManagement.Infrastructure.Services.Jop;
+using ClinicalManagement.Infrastructure.Services.SnedEmail;
 
 namespace ClinicalManagement.Infrastructure.Extentions
 {

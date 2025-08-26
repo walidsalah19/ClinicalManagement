@@ -44,6 +44,9 @@ namespace ClinicalManagement.Extentions
                 });
             });
 
+
+            // segnalr
+           services.AddSignalR();
             return services;
         }
     }

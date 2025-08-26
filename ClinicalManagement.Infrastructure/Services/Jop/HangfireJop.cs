@@ -5,13 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClinicalManagement.Infrastructure.Jop
+namespace ClinicalManagement.Infrastructure.Services.Jop
 {
     class HangfireJop : IhangfireJop
     {
         public Task CreateScheduleJop()
         {
-            throw new NotImplementedException();
+            return null;
         }
     }
 }
