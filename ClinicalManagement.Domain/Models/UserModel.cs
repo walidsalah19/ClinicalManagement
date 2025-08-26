@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using ClinicalManagement.Domain.Models;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,8 @@ namespace ClinicalManagement.Domain.Entities
         public string NationalId { get; set; }
         public string? Address { get; set; }
         public DateTime? BirthDate { get; set; }
-       
+
+
+        public List<Notification>? Notifications { get; set; }
     }
 }

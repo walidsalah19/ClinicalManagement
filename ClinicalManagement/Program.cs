@@ -36,6 +36,8 @@ namespace ClinicalManagement
             builder.Host.UseSerilog();
             builder.Services.AddSwaggerServices();
             builder.Services.AddAuthServices(builder.Configuration);
+
+
             var app = builder.Build();
             
             // Configure the HTTP request pipeline.
