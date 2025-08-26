@@ -12,8 +12,8 @@ namespace ClinicalManagement.Domain.Models
 
 
 
-        /*public ICollection<Appointment> Appointments { get; set; }
-        public ICollection<Prescription> Prescriptions { get; set; }
+        public ICollection<Appointment> Appointments { get; set; }
+       /* public ICollection<Prescription> Prescriptions { get; set; }
         public ICollection<Invoice> Invoices { get; set; }*/
     }
 }

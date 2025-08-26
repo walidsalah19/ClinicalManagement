@@ -1,22 +1,18 @@
-﻿using System;
+﻿using ClinicalManagement.Domain.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClinicalManagement.Domain.Models
+namespace ClinicalManagement.Application.Dtos.AppointmentDtos
 {
-   public class Appointment
+   public class CreateAppointment
     {
-        public Guid Id { get; set; }
         public DateTime AppointmentDate { get; set; }
-        public string Status { get; set; } = "Pending";
         public string Notes { get; set; }
-
         public string DoctorId { get; set; }
-        public Doctor Doctor { get; set; }
-
+      
         public string PatientId { get; set; }
-        public Patient Patient { get; set; }
     }
 }
