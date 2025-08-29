@@ -28,6 +28,11 @@ using ClinicalManagement.Infrastructure.Services.Jop;
 using ClinicalManagement.Infrastructure.Services.SnedEmail;
 using ClinicalManagement.Application.Abstractions.Caching;
 using ClinicalManagement.Infrastructure.Services.Caching;
+using ClinicalManagement.Application.Abstractions.SignalR;
+using ClinicalManagement.Infrastructure.Services.SignalR;
+using ClinicalManagement.Application.Abstractions.DbContext;
+using ClinicalManagement.Application.Abstractions.Services.AppointmentServices;
+using ClinicalManagement.Infrastructure.Services.AppointmentServices;
 
 namespace ClinicalManagement.Infrastructure.Extentions
 {
@@ -42,6 +47,10 @@ namespace ClinicalManagement.Infrastructure.Extentions
             });
             services.AddIdentity<UserModel, IdentityRole>()
              .AddEntityFrameworkStores<AppDbContext>();
+
+            services.AddScoped<IAppDbContext>(provider => provider.GetRequiredService<AppDbContext>());
+
+
             services.AddStackExchangeRedisCache(options =>
             {
                 options.Configuration = config.GetConnectionString("Redis");
@@ -66,9 +75,14 @@ namespace ClinicalManagement.Infrastructure.Extentions
             services.AddScoped<ITokenService, TokenService>();
 
             services.AddScoped(typeof(IBaseReposatory<>), typeof(BaseReposatory<>));
+
             services.AddScoped<IAppoointmentsRepo, AppointmentsRepo>();
+            services.AddScoped<IAppointmentService, AppointmentService>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            services.AddScoped<ISignalrServices, SignalRservices>();
+            services.AddSingleton<IConnectionMappingService, ConnectionMappingService>();
 
             // services.AddScoped<IUsersServices<UsersModel>, UsersServices<UsersModel>();
 

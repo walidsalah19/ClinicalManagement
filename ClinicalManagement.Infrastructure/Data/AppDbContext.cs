@@ -1,4 +1,5 @@
-﻿using ClinicalManagement.Domain.Entities;
+﻿using ClinicalManagement.Application.Abstractions.DbContext;
+using ClinicalManagement.Domain.Entities;
 using ClinicalManagement.Domain.Models;
 using ClinicalManagement.Infrastructure.Data.Configrations;
 using Microsoft.AspNetCore.Identity;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace ClinicalManagement.Infrastructure.Data
 {
-    public class AppDbContext : IdentityDbContext<UserModel>
+    public class AppDbContext : IdentityDbContext<UserModel>, IAppDbContext
     {
         public DbSet<Patient> Patients { get; set; }
         public DbSet<Doctor> Doctors { get; set; }

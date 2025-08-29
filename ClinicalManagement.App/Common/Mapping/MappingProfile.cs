@@ -50,6 +50,10 @@ namespace ClinicalManagement.Application.Common.Mapping
             .ForMember(dest => dest.PatientId, opt => opt.MapFrom(src => src.PatientId))
             .ForMember(dest => dest.DoctorId, opt => opt.MapFrom(src => src.DoctorId))
             .ForMember(dest => dest.Notes,  opt=>opt.MapFrom(src=>src.Notes));
+
+
+            CreateMap<Appointment, GetAppointmentDto>();
+
             /*.ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.UserName))
             .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Address))
             .ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(src => src.PhoneNumber))
