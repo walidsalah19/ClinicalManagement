@@ -26,6 +26,8 @@ using ClinicalManagement.Infrastructure.Services.AuthServices;
 using ClinicalManagement.Infrastructure.UnitOFWork;
 using ClinicalManagement.Infrastructure.Services.Jop;
 using ClinicalManagement.Infrastructure.Services.SnedEmail;
+using ClinicalManagement.Application.Abstractions.Caching;
+using ClinicalManagement.Infrastructure.Services.Caching;
 
 namespace ClinicalManagement.Infrastructure.Extentions
 {
@@ -56,11 +58,16 @@ namespace ClinicalManagement.Infrastructure.Extentions
             services.AddScoped<IhangfireJop, HangfireJop>();
             services.AddScoped<IRoleServices, RoleServices>();
             services.AddScoped<ISendEmail, SendEmailServices>();
+            services.AddScoped<ICachingServices, RedisCaching>();
+
 
             services.AddScoped<IUsersServices, UsersServices>();
             services.AddScoped<IAuthServices, AuthServices>();
             services.AddScoped<ITokenService, TokenService>();
+
             services.AddScoped(typeof(IBaseReposatory<>), typeof(BaseReposatory<>));
+            services.AddScoped<IAppoointmentsRepo, AppointmentsRepo>();
+
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             // services.AddScoped<IUsersServices<UsersModel>, UsersServices<UsersModel>();

@@ -1,4 +1,5 @@
 
+using ClinicalManagement.Application.Abstractions;
 using ClinicalManagement.Application.Behavier;
 using ClinicalManagement.Application.Extentions;
 using ClinicalManagement.Application.Validations;
@@ -6,6 +7,7 @@ using ClinicalManagement.Domain.Entities;
 using ClinicalManagement.Extentions;
 using ClinicalManagement.Infrastructure.Data;
 using ClinicalManagement.Infrastructure.Extentions;
+using ClinicalManagement.Infrastructure.Services.SignalR;
 using ClinicalManagement.Middelwares;
 using FluentValidation;
 using Hangfire;
@@ -27,7 +29,7 @@ namespace ClinicalManagement
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-          //  builder.Services.AddSwaggerGen();
+          // builder.Services.AddSwaggerGen();
             builder.Services.AddInfrastructure(builder.Configuration);
             builder.Services.AddFluentEmail(builder.Configuration);
             builder.Services.AddApplicationServices();
@@ -57,6 +59,9 @@ namespace ClinicalManagement
             app.MapControllers();
             app.UseMiniProfiler();
 
+
+
+            app.MapHub<SignalRservices>("/chat");
             app.Run();
         }
     }

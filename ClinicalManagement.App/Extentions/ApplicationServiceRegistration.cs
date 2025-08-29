@@ -8,6 +8,7 @@ using FluentValidation;
 using ClinicalManagement.Application.Validations;
 using ClinicalManagement.Application.Behavier;
 using MediatR;
+using System.Reflection;
 
 
 namespace ClinicalManagement.Application.Extentions
@@ -20,7 +21,10 @@ namespace ClinicalManagement.Application.Extentions
             services.AddMediatR(options =>
                 options.RegisterServicesFromAssembly(typeof(ApplicationServiceRegistration).Assembly));
 
+
             services.AddValidatorsFromAssembly(typeof(ApplicationServiceRegistration).Assembly);
+
+            //services.AddValidatorsFromAssembly(typeof(ApplicationServiceRegistration).Assembly);
             // pipeline registration 
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPipline<,>));
 

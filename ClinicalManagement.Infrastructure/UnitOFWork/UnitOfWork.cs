@@ -13,26 +13,15 @@ namespace ClinicalManagement.Infrastructure.UnitOFWork
     class UnitOfWork : IUnitOfWork
     {
         private readonly AppDbContext appDbContext;
-        private readonly Dictionary<Type, object> _repositories;
+        public IAppoointmentsRepo appoointmentsRepo { get; set; }
 
-        public UnitOfWork(AppDbContext appDbContext)
+        public UnitOfWork(AppDbContext appDbContext, IAppoointmentsRepo appoointmentsRepo)
         {
             this.appDbContext = appDbContext;
-            _repositories = new Dictionary<Type, object>();
-
+            this.appoointmentsRepo = appoointmentsRepo;
         }
-        public IBaseReposatory<T> Repository<T>() where T : class
-        {
-            var type = typeof(T);
 
-            if (!_repositories.ContainsKey(type))
-            {
-                var repositoryInstance = new BaseReposatory<T>(appDbContext);
-                _repositories.Add(type, repositoryInstance);
-            }
 
-            return (IBaseReposatory<T>)_repositories[type];
-        }
         public async Task<int> Complete()
         {
             return await appDbContext.SaveChangesAsync();
