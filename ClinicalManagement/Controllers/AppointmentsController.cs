@@ -1,6 +1,8 @@
 ﻿using ClinicalManagement.Application.Appointments.AddAppointment;
 using ClinicalManagement.Application.Appointments.GetAppointments;
+using ClinicalManagement.Application.Appointments.GetAppointmentsByDate;
 using ClinicalManagement.Application.Dtos.AppointmentDtos;
+using ClinicalManagement.Domain.Models;
 using ClinicalManagement.Extentions;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -27,10 +29,18 @@ namespace ClinicalManagement.Controllers
 
             return this.HandleResult(res);
         }
-        [HttpGet("PatientAppointments")]
-        public async Task<IActionResult> GetPatientAppointment([FromQuery] string patientId)
+        [HttpGet()]
+        public async Task<IActionResult> GetPatientAppointment([FromQuery] GetApplointmentsQuery data)
         {
-            var res = await mediator.Send(new GetApplointmentsQuery { Id = patientId });
+            var res = await mediator.Send(data);
+
+            return this.HandleResult(res);
+        }
+
+        [HttpGet("ByDate")]
+        public async Task<IActionResult> GetByDateAppointment([FromQuery] GetAppointmentsByDateQuery data)
+        {
+            var res = await mediator.Send(data);
 
             return this.HandleResult(res);
         }
