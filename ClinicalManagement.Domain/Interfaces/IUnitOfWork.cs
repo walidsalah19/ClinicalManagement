@@ -8,7 +8,7 @@ namespace ClinicalManagement.Domain.Interfaces
 {
     public interface IUnitOfWork :  IDisposable
     {
-        IBaseReposatory<T> Repository<T>() where T : class;
+        IAppoointmentsRepo appoointmentsRepo { get; set; }
         Task<int> Complete();
     }
 }

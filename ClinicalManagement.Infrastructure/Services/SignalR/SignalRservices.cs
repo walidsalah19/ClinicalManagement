@@ -8,12 +8,13 @@ using System.Threading.Tasks;
 
 namespace ClinicalManagement.Infrastructure.Services.SignalR
 {
-    public class SignalRservices : Hub<ISignalRHub>
+    public class SignalRservices : Hub
     {
 
-        public override Task OnConnectedAsync()
+        public override async Task OnConnectedAsync()
         {
-            return base.OnConnectedAsync();
+            await Clients.All.SendAsync("Recieve message" + $"{Context.ConnectionId}");
+            //return base.OnConnectedAsync();
         }
         public override Task OnDisconnectedAsync(Exception? exception)
         {
