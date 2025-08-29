@@ -61,7 +61,7 @@ namespace ClinicalManagement
 
 
 
-            app.MapHub<SignalRservices>("/chat");
+            app.MapHub<SignalrHub>("/chat");
             app.Run();
         }
     }

@@ -1,4 +1,5 @@
 ﻿using ClinicalManagement.Application.Abstractions;
+using ClinicalManagement.Application.Abstractions.SignalR;
 using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
@@ -8,17 +9,25 @@ using System.Threading.Tasks;
 
 namespace ClinicalManagement.Infrastructure.Services.SignalR
 {
-    public class SignalRservices : Hub
+    public class SignalRservices:ISignalrServices
     {
 
-        public override async Task OnConnectedAsync()
+        private readonly IHubContext<SignalrHub> _hubContext;
+        private readonly IConnectionMappingService _connectionMappingService;
+
+        public SignalRservices(IHubContext<SignalrHub> hubContext, IConnectionMappingService connectionMappingService)
         {
-            await Clients.All.SendAsync("Recieve message" + $"{Context.ConnectionId}");
-            //return base.OnConnectedAsync();
+            _hubContext = hubContext;
+            _connectionMappingService = connectionMappingService;
         }
-        public override Task OnDisconnectedAsync(Exception? exception)
+
+        public async Task SendMessageToUserAsync(string userId, string message)
         {
-            return base.OnDisconnectedAsync(exception);
+            var connections = _connectionMappingService.GetConnections(userId);
+            foreach (var connectionId in connections)
+            {
+                await _hubContext.Clients.Client(connectionId).SendAsync("ReceiveMessage", message);
+            }
         }
     }
 }
