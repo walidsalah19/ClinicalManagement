@@ -1,6 +1,7 @@
 ﻿using ClinicalManagement.Application.Appointments.AddAppointment;
 using ClinicalManagement.Application.Appointments.GetAppointments;
 using ClinicalManagement.Application.Appointments.GetAppointmentsByDate;
+using ClinicalManagement.Application.Appointments.UpAppointmentStatus;
 using ClinicalManagement.Application.Dtos.AppointmentDtos;
 using ClinicalManagement.Domain.Models;
 using ClinicalManagement.Extentions;
@@ -41,6 +42,13 @@ namespace ClinicalManagement.Controllers
         public async Task<IActionResult> GetByDateAppointment([FromQuery] GetAppointmentsByDateQuery data)
         {
             var res = await mediator.Send(data);
+
+            return this.HandleResult(res);
+        }
+        [HttpPut("Status")]
+        public async Task<IActionResult> UpdateAppointmentStatus( UpdateAppointmentStatus data)
+        {
+            var res = await mediator.Send(new UpdateAppointmentStatusCommand { status = data });
 
             return this.HandleResult(res);
         }
