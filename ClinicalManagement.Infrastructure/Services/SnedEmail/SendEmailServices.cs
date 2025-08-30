@@ -1,4 +1,4 @@
-﻿using ClinicalManagement.Application.Abstractions.Services;
+﻿using ClinicalManagement.Application.Abstractions.Services.EmailServices;
 using ClinicalManagement.Domain.EmailModel;
 using ClinicalManagement.Domain.Models;
 using ClinicalManagement.Infrastructure.Services.SignalR;

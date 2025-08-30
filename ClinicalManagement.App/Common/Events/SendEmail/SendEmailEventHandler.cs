@@ -1,4 +1,4 @@
-﻿using ClinicalManagement.Application.Abstractions.Services;
+﻿using ClinicalManagement.Application.Abstractions.Services.EmailServices;
 using MediatR;
 using System;
 using System.Collections.Generic;

@@ -15,7 +15,6 @@ using MediatR;
 using Hangfire;
 using FluentValidation;
 using ClinicalManagement.Application.Abstractions.Jop;
-using ClinicalManagement.Application.Abstractions.Services;
 using ClinicalManagement.Domain.Interfaces;
 using ClinicalManagement.Infrastructure.Reposatories;
 using ClinicalManagement.Domain.Models;
@@ -33,6 +32,7 @@ using ClinicalManagement.Infrastructure.Services.SignalR;
 using ClinicalManagement.Application.Abstractions.DbContext;
 using ClinicalManagement.Application.Abstractions.Services.AppointmentServices;
 using ClinicalManagement.Infrastructure.Services.AppointmentServices;
+using ClinicalManagement.Application.Abstractions.Services.EmailServices;
 
 namespace ClinicalManagement.Infrastructure.Extentions
 {
@@ -78,6 +78,9 @@ namespace ClinicalManagement.Infrastructure.Extentions
 
             services.AddScoped<IAppoointmentsRepo, AppointmentsRepo>();
             services.AddScoped<IAppointmentService, AppointmentService>();
+
+            services.AddScoped<INotificationRepo, NotificationRepo>();
+
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 

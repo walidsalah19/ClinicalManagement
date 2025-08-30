@@ -9,6 +9,8 @@ namespace ClinicalManagement.Domain.Interfaces
     public interface IUnitOfWork :  IDisposable
     {
         IAppoointmentsRepo appoointmentsRepo { get; set; }
+        INotificationRepo notificationRepo { get; set; }
+
         Task<int> Complete();
     }
 }
