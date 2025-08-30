@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ClinicalManagement.Infrastructure.Reposatories
 {
@@ -23,8 +24,9 @@ namespace ClinicalManagement.Infrastructure.Reposatories
             await dbContext.Set<T>().AddAsync(entity);
         }
 
-        public async Task<T> GetEntityById(string id)
+        public async Task<T> GetEntityById(string idString)
         {
+            Guid id = Guid.Parse(idString);
             return await dbContext.Set<T>().FindAsync(id);
         }
 

@@ -9,7 +9,7 @@ namespace ClinicalManagement.Application.Dtos.AppointmentDtos
 {
     public class UpdateAppointmentStatus
     {
-        public required string Id { get; set; }
+        public required string AppointmentId { get; set; }
         [Required]
         [RegularExpression("^(Pending|Confirmed|Cancelled)$", ErrorMessage = "Status must be Pending, Confirmed, or Cancelled.")]
         public required string Status { get; set; }
