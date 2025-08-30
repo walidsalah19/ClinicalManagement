@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ClinicalManagement.Application.Dtos.AppointmentDtos;
+using ClinicalManagement.Application.Dtos.NotificationsDto;
 using ClinicalManagement.Application.Dtos.UserDtos;
 using ClinicalManagement.Application.Dtos.UserDtos.Commands;
 using ClinicalManagement.Application.Dtos.UserDtos.Queries;
@@ -53,6 +54,9 @@ namespace ClinicalManagement.Application.Common.Mapping
 
 
             CreateMap<Appointment, GetAppointmentDto>();
+
+            CreateMap<Notification, NotifyDto>();
+
 
             /*.ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.UserName))
             .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Address))
