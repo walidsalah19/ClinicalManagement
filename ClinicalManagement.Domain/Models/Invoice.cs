@@ -8,12 +8,21 @@ namespace ClinicalManagement.Domain.Models
 {
    public class Invoice
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; set; }  
+        public string InvoiceNumber { get; set; }
         public DateTime Date { get; set; }
-        public decimal Amount { get; set; }
-        public string Status { get; set; }
+        public decimal Discount { get; set; }
+        public decimal Tax { get; set; }
+        public string PaymentMethod { get; set; }
+        public string ClinicName { get; set; }
+        public string ClinicContact { get; set; }
+       
+
+        public Guid appointmentId { get; set; }  
+        public Appointment Appointment { get; set; }
 
         public string PatientId { get; set; }
-        public Patient Patient { get; set; }
+        public Patient patient { get; set; }
+        public ICollection<InvoiceItem> Items { get; set; } = new List<InvoiceItem>();
     }
 }
