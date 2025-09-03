@@ -13,6 +13,7 @@ using FluentValidation;
 using Hangfire;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using QuestPDF.Infrastructure;
 using Serilog;
 using System;
 
@@ -39,6 +40,9 @@ namespace ClinicalManagement
             builder.Services.AddSwaggerServices();
             builder.Services.AddAuthServices(builder.Configuration);
 
+
+            //???? ?? questpdf ????? ????? 
+            QuestPDF.Settings.License = LicenseType.Community;
 
             var app = builder.Build();
             

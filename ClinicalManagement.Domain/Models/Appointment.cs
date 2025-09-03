@@ -18,5 +18,7 @@ namespace ClinicalManagement.Domain.Models
 
         public string PatientId { get; set; }
         public Patient Patient { get; set; }
+
+        public Invoice Invoice { get; set; }
     }
 }

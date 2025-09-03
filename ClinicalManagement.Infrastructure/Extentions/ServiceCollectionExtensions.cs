@@ -33,6 +33,8 @@ using ClinicalManagement.Application.Abstractions.DbContext;
 using ClinicalManagement.Application.Abstractions.Services.AppointmentServices;
 using ClinicalManagement.Infrastructure.Services.AppointmentServices;
 using ClinicalManagement.Application.Abstractions.Services.EmailServices;
+using ClinicalManagement.Application.Abstractions.GenerateReport;
+using ClinicalManagement.Infrastructure.Services.Reports;
 
 namespace ClinicalManagement.Infrastructure.Extentions
 {
@@ -74,6 +76,9 @@ namespace ClinicalManagement.Infrastructure.Extentions
             services.AddScoped<IAuthServices, AuthServices>();
             services.AddScoped<ITokenService, TokenService>();
 
+            services.AddScoped<IGenerateReport, GeneratePdfReport>();
+
+
             services.AddScoped(typeof(IBaseReposatory<>), typeof(BaseReposatory<>));
 
             services.AddScoped<IAppoointmentsRepo, AppointmentsRepo>();
@@ -86,6 +91,7 @@ namespace ClinicalManagement.Infrastructure.Extentions
 
             services.AddScoped<ISignalrServices, SignalRservices>();
             services.AddSingleton<IConnectionMappingService, ConnectionMappingService>();
+
 
             // services.AddScoped<IUsersServices<UsersModel>, UsersServices<UsersModel>();
 
