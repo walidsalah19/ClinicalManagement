@@ -1,6 +1,7 @@
 ﻿using ClinicalManagement.Application.Abstractions.DbContext;
-using ClinicalManagement.Application.Abstractions.GenerateReport;
+using ClinicalManagement.Application.Abstractions.GenerateInvoicePdf;
 using ClinicalManagement.Application.Common.Result;
+using ClinicalManagement.Domain.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -15,21 +16,22 @@ namespace ClinicalManagement.Application.Reports.PdfReport
     {
 
         private readonly IAppDbContext appDbContext;
-        private readonly IGenerateReport generateReport;
+        private readonly IGenerateInvoicePdfServices services;
 
-        public PdfReportHandler(IAppDbContext appDbContext, IGenerateReport generateReport)
+        public PdfReportHandler(IAppDbContext appDbContext, IGenerateInvoicePdfServices services)
         {
             this.appDbContext = appDbContext;
-            this.generateReport = generateReport;
+            this.services = services;
         }
 
         Task<byte[]> IRequestHandler<PdfReportQuery, byte[]>.Handle(PdfReportQuery request, CancellationToken cancellationToken)
         {
             var query = appDbContext.Appointments.Include(x=>x.Doctor).Include(x=>x.Patient)
            .Where(a => a.AppointmentDate >= request.From && a.AppointmentDate <= request.To).ToList();
-
-
-            return Task.FromResult (generateReport.GenerateAppointmentsPdf(query, request.From, request.To));
+            var res = services.GenerateInvoice("124");
+           
+            return Task.FromResult(res);
         }
+       
     }
 }
