@@ -23,6 +23,6 @@ namespace ClinicalManagement.Domain.Models
 
         public string PatientId { get; set; }
         public Patient patient { get; set; }
-        public ICollection<InvoiceItem> Items { get; set; } = new List<InvoiceItem>();
+        public List<InvoiceItem> Items { get; set; } = new List<InvoiceItem>();
     }
 }
