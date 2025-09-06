@@ -14,10 +14,12 @@ using ClinicalManagement.Domain.EmailModel;
 using ClinicalManagement.Domain.Enums;
 using ClinicalManagement.Extentions;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 namespace ClinicalManagement.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
@@ -28,7 +30,6 @@ namespace ClinicalManagement.Controllers
         {
             this.mediator = mediator;
         }
-
         [HttpPost("admin")]
         public async Task<IActionResult> CreateAdmin([FromBody] CreateAdminDto admin)
         {
@@ -65,13 +66,14 @@ namespace ClinicalManagement.Controllers
             var res = await mediator.Send(new AllDoctorsQuery());
             return this.HandleResult(res);
         }
-
+        [AllowAnonymous]
         [HttpPost("patient")]
         public async Task<IActionResult> CreatePatient([FromBody] CreatePatientDto user)
         {
            var res=await mediator.Send(new CreateUserCommand { userDto=user});
             return this.HandleResult(res);
         }
+        [Authorize(Roles = "Patient")]
         [HttpPut("patient")]
         public async Task<IActionResult> UpdatePatient([FromBody] UpdatePatientDto user)
         {

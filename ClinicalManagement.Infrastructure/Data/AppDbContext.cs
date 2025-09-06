@@ -27,6 +27,7 @@ namespace ClinicalManagement.Infrastructure.Data
         public DbSet<Invoice> Invoices { get; set; }
 
 
+
         public AppDbContext(DbContextOptions options) : base(options)
         {
         }
