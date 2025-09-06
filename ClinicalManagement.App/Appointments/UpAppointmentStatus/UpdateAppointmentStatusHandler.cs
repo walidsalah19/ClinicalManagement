@@ -36,7 +36,7 @@ namespace ClinicalManagement.Application.Appointments.UpAppointmentStatus
             try
             {
                 await unitOfWork.Complete();
-                await mediator.Publish(new SendNotification(UserId: appointmnt.PatientId, message: $" appointment at {appointmnt.AppointmentDate} has status changed to {appointmnt.Status}"));
+                await mediator.Publish(new SendNotification(UserId: appointmnt.PatientId, message: $" appointment at {appointmnt.AppointmentDate} has status changed to {appointmnt.Status}",appointmentDate:appointmnt.AppointmentDate));
 
                 return Result<string>.Success("Update appointment status Successfully");
             }

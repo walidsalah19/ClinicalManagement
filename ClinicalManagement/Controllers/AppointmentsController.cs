@@ -6,6 +6,7 @@ using ClinicalManagement.Application.Dtos.AppointmentDtos;
 using ClinicalManagement.Domain.Models;
 using ClinicalManagement.Extentions;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -22,7 +23,7 @@ namespace ClinicalManagement.Controllers
         {
             this.mediator = mediator;
         }
-
+        [Authorize(Roles ="Patient")]
         [HttpPost]
         public async Task<IActionResult> CreateAppointment([FromBody] CreateAppointment appointment)
         {
@@ -30,6 +31,8 @@ namespace ClinicalManagement.Controllers
 
             return this.HandleResult(res);
         }
+        [Authorize(Roles = "Patient")]
+
         [HttpGet()]
         public async Task<IActionResult> GetPatientAppointment([FromQuery] GetApplointmentsQuery data)
         {
@@ -37,7 +40,7 @@ namespace ClinicalManagement.Controllers
 
             return this.HandleResult(res);
         }
-
+        [Authorize(Roles = "Patient,Doctor")]
         [HttpGet("ByDate")]
         public async Task<IActionResult> GetByDateAppointment([FromQuery] GetAppointmentsByDateQuery data)
         {
@@ -45,6 +48,7 @@ namespace ClinicalManagement.Controllers
 
             return this.HandleResult(res);
         }
+        [Authorize(Roles = "Patient,Doctor")]
         [HttpPut("Status")]
         public async Task<IActionResult> UpdateAppointmentStatus( UpdateAppointmentStatus data)
         {

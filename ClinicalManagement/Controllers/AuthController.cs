@@ -4,11 +4,13 @@ using ClinicalManagement.Application.Auth.RefreshToken;
 using ClinicalManagement.Extentions;
 using ClinicalManagement.Infrastructure.Migrations;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ClinicalManagement.Controllers
 {
+    [Authorize(Roles = "Patient,Admin,Doctor")]
     [Route("api/[controller]")]
     [ApiController]
     public class AuthController : ControllerBase
@@ -19,6 +21,7 @@ namespace ClinicalManagement.Controllers
         {
             this.mediator = mediator;
         }
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<IActionResult> Login(string nameOrEmail,string password)
         {

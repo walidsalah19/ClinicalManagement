@@ -3,12 +3,14 @@ using ClinicalManagement.Application.Roles.Commands;
 using ClinicalManagement.Application.Roles.Quires;
 using ClinicalManagement.Extentions;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace ClinicalManagement.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class RolesController : ControllerBase
