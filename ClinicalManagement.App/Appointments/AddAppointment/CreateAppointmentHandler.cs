@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ClinicalManagement.Application.Abstractions.Caching;
+using ClinicalManagement.Application.Abstractions.DbContext;
 using ClinicalManagement.Application.Common.Events.Notifications;
 using ClinicalManagement.Application.Common.Events.SendEmail;
 using ClinicalManagement.Application.Common.Result;
@@ -22,14 +23,7 @@ namespace ClinicalManagement.Application.Appointments.AddAppointment
         private readonly IMapper mapper;
         private readonly ICachingServices cachingServices;
         private readonly IMediator _mediator;
-
-        public CreateAppointmentHandler(IUnitOfWork unitOfWork, IMapper mapper, ICachingServices cachingServices, IMediator mediator)
-        {
-            this.unitOfWork = unitOfWork;
-            this.mapper = mapper;
-            this.cachingServices = cachingServices;
-            _mediator = mediator;
-        }
+      
 
         public async Task<Result<string>> Handle(CreateAppointmentComand request, CancellationToken cancellationToken)
         {
@@ -51,8 +45,21 @@ namespace ClinicalManagement.Application.Appointments.AddAppointment
                 try
                 {
                     await unitOfWork.Complete();
-                    await _mediator.Publish(new SendNotification ( UserId:appintment.PatientId,message:$"You Hanve a new appointment at {appintment.AppointmentDate}"));
-
+                    await _mediator.Publish(new SendNotification ( UserId:appintment.PatientId,message:$"You Hanve a new appointment at {appintment.AppointmentDate}",appointmentDate:appintment.AppointmentDate));
+                    await unitOfWork.invicesRepo.AddAsync(new Invoice
+                    {
+                        appointmentId = Guid.Parse(appintment.PatientId),
+                        Discount = 0,
+                        PatientId = request.appointment.PatientId,
+                        ClinicContact = "123456789",
+                        ClinicName = "Clinic 1",
+                        Date = DateTime.UtcNow,
+                        Id = Guid.NewGuid()
+                    ,
+                        Tax = 9,
+                        InvoiceNumber = "1",
+                        PaymentMethod = "cach"
+                    });  
                 }
                 catch (DbUpdateException ex)
                 {

@@ -5,10 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClinicalManagement.Application.Abstractions.Jop
+namespace ClinicalManagement.Domain.Interfaces
 {
-    public interface IhangfireJop
+    public interface IInvicesRepo : IBaseReposatory<Invoice>
     {
-        public void CreateScheduleJop(string userId,DateTime date);
     }
 }

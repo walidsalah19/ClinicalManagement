@@ -10,7 +10,7 @@ namespace ClinicalManagement.Domain.Interfaces
     {
         IAppoointmentsRepo appoointmentsRepo { get; set; }
         INotificationRepo notificationRepo { get; set; }
-
+        IInvicesRepo invicesRepo { get; set; }
         Task<int> Complete();
     }
 }

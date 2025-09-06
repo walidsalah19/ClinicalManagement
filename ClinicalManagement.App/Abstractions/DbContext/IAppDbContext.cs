@@ -18,6 +18,8 @@ namespace ClinicalManagement.Application.Abstractions.DbContext
         public DbSet<Notification> Notifications { get; set; }
 
         public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<Invoice> Invoices { get; set; }
+
 
     }
 }

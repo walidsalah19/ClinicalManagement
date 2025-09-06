@@ -86,6 +86,8 @@ namespace ClinicalManagement.Infrastructure.Extentions
             services.AddScoped<IAppointmentService, AppointmentService>();
 
             services.AddScoped<INotificationRepo, NotificationRepo>();
+            services.AddScoped<IInvicesRepo, InvoicesRepo>();
+
 
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
