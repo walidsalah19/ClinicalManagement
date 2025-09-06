@@ -15,12 +15,14 @@ namespace ClinicalManagement.Infrastructure.UnitOFWork
         private readonly AppDbContext appDbContext;
         public IAppoointmentsRepo appoointmentsRepo { get; set; }
         public INotificationRepo notificationRepo { get; set; }
+       public IInvicesRepo invicesRepo { get; set; }
 
-        public UnitOfWork(AppDbContext appDbContext, IAppoointmentsRepo appoointmentsRepo, INotificationRepo notificationRepo)
+        public UnitOfWork(AppDbContext appDbContext, IAppoointmentsRepo appoointmentsRepo, INotificationRepo notificationRepo, IInvicesRepo invicesRepo)
         {
             this.appDbContext = appDbContext;
             this.appoointmentsRepo = appoointmentsRepo;
             this.notificationRepo = notificationRepo;
+            this.invicesRepo = invicesRepo;
         }
 
         public async Task<int> Complete()

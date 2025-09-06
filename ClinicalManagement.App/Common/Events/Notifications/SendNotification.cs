@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ClinicalManagement.Application.Common.Events.Notifications
 {
-    public record SendNotification(string message,string UserId) :INotification
+    public record SendNotification(string message,string UserId,DateTime appointmentDate) :INotification
     {
        
     }
